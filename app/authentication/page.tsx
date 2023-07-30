@@ -3,14 +3,16 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { PropsWithChildren } from "react";
 import { useCurrentUser } from "../hooks/api/useUserApi";
 import routes from "../routes";
 
 import Form from "./form";
 
-const AuthenticationPage = () => {
+const AuthenticationPage:React.FC<PropsWithChildren> = () => {
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
   if (isLoadingUser) return null;
+  const hello = "gello"
 
   if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard.index);
   return (
