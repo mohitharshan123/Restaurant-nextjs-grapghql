@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -12,9 +11,9 @@ import Form from "./form";
 const AuthenticationPage:React.FC<PropsWithChildren> = () => {
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
   if (isLoadingUser) return null;
-  const hello = "gello"
-
+const gello="asfasf";
   if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard.index);
+
   return (
     <>
       <div className="container h-screen relative hidden flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
