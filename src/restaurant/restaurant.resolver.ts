@@ -3,8 +3,8 @@ import {
   CreateRestaurantInput,
   GetRestaurantInput,
   Restaurant,
-} from "@/schema/restaurant.schema";
-import RestaurantService from "@/services/restaurant.service";
+} from "restaurant/restaurant.schema";
+import RestaurantService from "restaurant/restaurant.service";
 
 @Resolver()
 export default class RestaurantResolver {

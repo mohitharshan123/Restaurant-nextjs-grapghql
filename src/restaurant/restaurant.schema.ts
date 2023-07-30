@@ -8,7 +8,7 @@ import {
 import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import { Field, InputType, ObjectType } from "type-graphql";
 
-import { Menu } from "./menu.schema";
+import { Menu } from "../menu/menu.schema";
 
 function findByName(
   this: ReturnModelType<typeof Restaurant, QueryHelpers>,

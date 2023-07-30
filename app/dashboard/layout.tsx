@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import Head from "next/head";
+"use client";
 
-import { Home, DogBowl } from "tabler-icons-react";
-import { QueryClientProvider } from "react-query";
+import React, { PropsWithChildren } from "react";
 
-import { Metadata } from "next";
-export const metadata: Metadata = { title: "Restaurant" };
+import ProtectedRoute from "../../components/ProtectedRoute";
 
-export default function Layout({ children, ...pageProps }) {
-  return (
-    <html>
-      <body>
+import Sidebar from "./sidebar";
+import routes from "../routes";
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => (
+  <html>
+    <body>
+      <ProtectedRoute redirectLink={routes.authentication}>
         <div className="flex h-screen flex-row bg-[#eceff180]">
-          <div className="flex flex-col">{children}</div>
+          <Sidebar />
+          <div className="xl:ml-80 w-full h-full relative p-5">{children}</div>
         </div>
-      </body>
-    </html>
-  );
-}
+      </ProtectedRoute>
+    </body>
+  </html>
+);
+
+export default Layout;

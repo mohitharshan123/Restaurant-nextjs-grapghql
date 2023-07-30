@@ -2,11 +2,11 @@ import { ApolloError } from "apollo-server-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import { CreateUserInput, LoginInput, UserModel } from "@/schema/user.schema";
+import { CreateUserInput, LoginInput, UserModel } from "user/user.schema";
 
 import Context from "../types/context";
 import { signJwt } from "../utils/jwt";
-import { RestaurantModel } from "@/schema/restaurant.schema";
+import { RestaurantModel } from "restaurant/restaurant.schema";
 
 class UserService {
   async createUser(input: CreateUserInput) {

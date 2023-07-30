@@ -3,11 +3,11 @@ import {
   CreateMenuInput,
   GetMenuInput,
   MenuModel,
-} from "@/schema/menu.schema";
-import { RestaurantModel } from "@/schema/restaurant.schema";
+} from "menu/menu.schema";
+import { RestaurantModel } from "restaurant/restaurant.schema";
 import { ApolloError } from "apollo-server-errors";
 
-import { createMenuItems } from "./utils";
+import { createMenuItems } from "../menu-item/utils";
 
 class MenuService {
   async createMenu(input: CreateMenuInput): Promise<Menu> {

@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateMenuInput, GetMenuInput, Menu } from "@/schema/menu.schema";
-import MenuService from "@/services/menu.service";
+import { CreateMenuInput, GetMenuInput, Menu } from "menu/menu.schema";
+import MenuService from "menu/menu.service";
 
 @Resolver()
 export default class MenuResolver {

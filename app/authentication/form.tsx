@@ -47,7 +47,7 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
         { input: pick(["email", "password"], values) },
         {
           onSuccess: (res) => {
-            if (res.login) router.push(routes.dashboard);
+            if (res.login) router.push(routes.dashboard.index);
           },
           onError: (error: any) => setErrors(error.response.errors),
         }

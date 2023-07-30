@@ -1,22 +1,16 @@
 "use client";
-import { dehydrate, useQuery } from "react-query";
-import Head from "next/head";
-import Link from "next/link";
 
-import { queryClient, getRestaurants } from "utils/api";
-import { redirect } from "next/navigation";
-import { useCurrentUser } from "../hooks/api/useUserApi";
-import useAuthenticate from "../hooks/useAuthenticate";
 import routes from "../routes";
-import React from "react";
-import ProtectedRoute from "../../components/ProtectedRoute";
+import React, { PropsWithChildren } from "react";
 import Sidebar from "./sidebar";
+import Actions from "./actions";
 
-const Dashboard = () => {
+const Dashboard: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <ProtectedRoute redirectLink={routes.authentication}>
-      <Sidebar />
-    </ProtectedRoute>
+    <div className="relative h-full w-full">
+      <p>Dashboard</p>
+      <Actions />
+    </div>
   );
 };
 

@@ -1,4 +1,8 @@
 export default {
-  dashboard: "dashboard",
-  authentication: "authentication",
+  dashboard: {
+    index: "/dashboard",
+    feedbacks: "/dashboard/feedbacks",
+    tables: "/dashboard/tables",
+  },
+  authentication: "/authentication",
 };

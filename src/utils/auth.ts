@@ -1,5 +1,5 @@
 import { ResolverData } from "type-graphql";
-import UserService from "../services/user.service";
+import UserService from "../user/user.service";
 import { AuthChecker } from "type-graphql";
 import Context from "@/types/context";
 

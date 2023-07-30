@@ -12,7 +12,7 @@ const AuthenticationPage = () => {
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
   if (isLoadingUser) return null;
 
-  if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard);
+  if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard.index);
   return (
     <>
       <div className="container h-screen relative hidden flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">

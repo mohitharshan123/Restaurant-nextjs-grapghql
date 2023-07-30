@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { User } from "../schema/user.schema";
+import { User } from "../user/user.schema";
 
 export const signJwt = (user: User): string => {
   const secretKey = process.env.PRIVATE_KEY;

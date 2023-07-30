@@ -1,7 +1,7 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 import { ObjectType, Field, Float, InputType } from "type-graphql";
-import { MenuItem } from "./menu-item.schema";
-import { Restaurant } from "./restaurant.schema";
+import { MenuItem } from "../menu-item/menu-item.schema";
+import { Restaurant } from "../restaurant/restaurant.schema";
 
 @ObjectType()
 export class Menu {

@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
-import { getRestaurant, QUERY_KEYS } from "../../../src/utils/api";
+import { myRestaurant, QUERY_KEYS } from "../../../src/utils/api";
+import { prop } from "ramda";
 
-export const useShowRestaurant = (id: string) =>
-  useQuery([QUERY_KEYS, id], () => getRestaurant({ id }), {
-    select: (data) => data.restaurant,
+export const useMyRestaurant = () =>
+  useQuery([QUERY_KEYS.myRestaurant], () => myRestaurant(), {
+    select: prop("myRestaurant"),
   });

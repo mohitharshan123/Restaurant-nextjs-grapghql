@@ -5,8 +5,14 @@ import { getSdk } from "../generated/graphql";
 
 const gqlClient = new GraphQLClient("http://localhost:3000/api/graphql");
 
-export const { getRestaurants, getRestaurant, createUser, login, currentUser } =
-  getSdk(gqlClient);
+export const {
+  getRestaurants,
+  getRestaurant,
+  createUser,
+  login,
+  currentUser,
+  myRestaurant,
+} = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,4 +27,5 @@ export const queryClient = new QueryClient({
 export const QUERY_KEYS = {
   restaurants: "restaurants",
   currentUser: "current-user",
+  myRestaurant: "my-restaurant",
 };

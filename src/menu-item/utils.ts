@@ -1,5 +1,5 @@
-import { MenuItem, MenuItemModel } from "../schema/menu-item.schema";
-import { Menu, MenuItemInput } from "../schema/menu.schema";
+import { MenuItem, MenuItemModel } from "./menu-item.schema";
+import { Menu, MenuItemInput } from "../menu/menu.schema";
 
 const createMenuItems = (menu: Menu, items: Array<MenuItemInput>) =>
   items.map((item: MenuItem) => {
