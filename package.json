@@ -9,7 +9,10 @@
     "build": "next build",
     "generate": "graphql-codegen",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "eslint": "eslint . --fix --max-warnings=0",
+    "format": "prettier . --write",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -30,6 +33,7 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
     "encoding": "^0.1.13",
+    "eslint": ">=5.16.0",
     "formik": "^2.4.2",
     "graphql": "15.x",
     "graphql-request": "^4.2.0",
@@ -62,10 +66,21 @@
     "@types/cookie-parser": "^1.4.2",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/react": "18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
     "autoprefixer": "^10.4.14",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-react": "^7.33.1",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "postcss": "^8.4.26",
+    "prettier": "^3.0.0",
     "tailwindcss": "^3.3.3",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2"
+  },
+  "lint-staged": {
+    "*.--write": "prettier --write"
   }
 }
