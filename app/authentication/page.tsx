@@ -11,7 +11,7 @@ import Form from "./form";
 const AuthenticationPage:React.FC<PropsWithChildren> = () => {
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
   if (isLoadingUser) return null;
-  const gello = "asfaf"
+  const gello= "asfaf"
 
   if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard.index);
 
