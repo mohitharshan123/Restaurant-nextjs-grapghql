@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Build and output directories
+.next/
+out/
+
+# Node.js
+node_modules/
+
+# Production build
+build/
+
+# Temporary files
+.DS_Store
+*.tmp
+*.temp
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor-specific files
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+
+# Other generated files
+yarn.lock
+package-lock.json

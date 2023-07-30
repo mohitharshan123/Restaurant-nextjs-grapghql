@@ -1,0 +1,17 @@
+mutation createUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    _id
+    name
+    email
+  }
+}
+
+mutation login($input: LoginInput!) {
+  login(input: $input)
+}
+
+ query currentUser {
+    me {
+      email
+    }
+  }

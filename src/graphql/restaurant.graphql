@@ -1,0 +1,20 @@
+query getRestaurant($id: String!) {
+  restaurant(id: $id) {
+    name
+    email
+    contact
+    location
+    menu {
+      items {
+        name
+        description
+      }
+    }
+  }
+}
+
+query getRestaurants {
+  restaurants {
+    name
+  }
+}
