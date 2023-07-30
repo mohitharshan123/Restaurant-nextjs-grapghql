@@ -15,7 +15,7 @@ class RestaurantService {
     } catch (error) {
       // Handle any errors that occur during the database query
       throw new ApolloError(
-        "Unable to fetch restaurants. Please try again later."
+        "Unable to fetch restaurants. Please try again later.",
       );
     }
   }

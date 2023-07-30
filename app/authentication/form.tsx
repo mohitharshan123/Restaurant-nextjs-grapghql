@@ -39,7 +39,7 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
       if (isSignup) {
         createUser(
           { input: { ...values } },
-          { onSuccess: () => setIsSignup(false) }
+          { onSuccess: () => setIsSignup(false) },
         );
         return;
       }
@@ -50,7 +50,7 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
             if (res.login) router.push(routes.dashboard.index);
           },
           onError: (error: any) => setErrors(error.response.errors),
-        }
+        },
       );
     },
   });

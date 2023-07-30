@@ -16,7 +16,7 @@ export type CreateUserPayload = {
 
 export const useCreateUser = () =>
   useMutation((payload: Exact<{ input: CreateUserInput }>) =>
-    createUser(payload)
+    createUser(payload),
   );
 
 export const useLogin = () =>

@@ -13,7 +13,7 @@ import { Field, InputType, ObjectType } from "type-graphql";
 
 function findByEmail(
   this: ReturnModelType<typeof User, QueryHelpers>,
-  email: User["email"]
+  email: User["email"],
 ) {
   return this.findOne({ email });
 }

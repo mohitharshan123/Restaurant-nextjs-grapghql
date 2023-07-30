@@ -26,7 +26,7 @@ class CreateUserMutationResponse {
 export default class UserResolver {
   constructor(
     private userService: UserService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
   ) {
     this.userService = new UserService();
     this.restaurantService = new RestaurantService();

@@ -12,7 +12,7 @@ import { Menu } from "../menu/menu.schema";
 
 function findByName(
   this: ReturnModelType<typeof Restaurant, QueryHelpers>,
-  name: Restaurant["name"]
+  name: Restaurant["name"],
 ) {
   return this.findOne({ name });
 }

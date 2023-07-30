@@ -5,7 +5,7 @@ import Context from "@/types/context";
 
 export const customAuthChecker: AuthChecker<Context> = (
   { root, args, context, info },
-  roles
+  roles,
 ) => {
   if (!context.user) return false;
   return true;

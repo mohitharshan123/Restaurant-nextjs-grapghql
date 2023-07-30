@@ -38,7 +38,7 @@ const Sidebar = () => {
                   {
                     "bg-gradient-to-tr from-blue-600 to-blue-400 shadow-blue-500/20":
                       activeSegment === link.targetSegment,
-                  }
+                  },
                 )}
               >
                 <ListItemPrefix>
