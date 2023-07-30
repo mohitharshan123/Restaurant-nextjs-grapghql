@@ -12,12 +12,8 @@ export default function Layout({ children, ...pageProps }) {
   return (
     <html>
       <body>
-        <div className="flex h-screen flex-row">
-          <p>asfasf</p>
-          <div className="flex flex-col">
-            {/* <Header /> */}
-            {children}
-          </div>
+        <div className="flex h-screen flex-row bg-[#eceff180]">
+          <div className="flex flex-col">{children}</div>
         </div>
       </body>
     </html>

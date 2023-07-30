@@ -10,11 +10,12 @@ import useAuthenticate from "../hooks/useAuthenticate";
 import routes from "../routes";
 import React from "react";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import Sidebar from "./sidebar";
 
 const Dashboard = () => {
   return (
     <ProtectedRoute redirectLink={routes.authentication}>
-      <span>This is the dashboard</span>
+      <Sidebar />
     </ProtectedRoute>
   );
 };
