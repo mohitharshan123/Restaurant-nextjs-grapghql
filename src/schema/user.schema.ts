@@ -43,10 +43,6 @@ export class User {
 
   @Field(() => String)
   @prop({ required: true })
-  name: string;
-
-  @Field(() => String)
-  @prop({ required: true })
   email: string;
 
   @prop({ required: true })
@@ -58,7 +54,7 @@ export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
 @InputType()
 export class CreateUserInput {
   @Field(() => String)
-  name: string;
+  restaurantName?: string;
 
   @IsEmail()
   @Field(() => String)

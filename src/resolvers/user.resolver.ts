@@ -1,16 +1,40 @@
-import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  Mutation,
+  Query,
+  Resolver,
+  Authorized,
+  ObjectType,
+  Field,
+} from "type-graphql";
 import { CreateUserInput, LoginInput, User } from "@/schema/user.schema";
 import UserService from "@/services/user.service";
+import RestaurantService from "@/services/restaurant.service";
+import { Restaurant } from "@/schema/restaurant.schema";
+
+@ObjectType()
+class CreateUserMutationResponse {
+  @Field(() => User, { nullable: true })
+  user?: User;
+
+  @Field(() => Restaurant, { nullable: true })
+  restaurant?: Restaurant;
+}
 
 @Resolver()
 export default class UserResolver {
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private restaurantService: RestaurantService
+  ) {
     this.userService = new UserService();
+    this.restaurantService = new RestaurantService();
   }
 
-  @Mutation(() => User)
+  @Mutation(() => CreateUserMutationResponse)
   createUser(@Arg("input") input: CreateUserInput) {
-    return this.userService.createUser(input);
+    return this.userService.createUserAndLinkRestaurant(input);
   }
 
   @Mutation(() => String)
@@ -22,5 +46,11 @@ export default class UserResolver {
   @Authorized()
   me(@Ctx() context: any) {
     return context.user;
+  }
+
+  @Query(() => Restaurant, { nullable: true })
+  @Authorized()
+  myRestaurant(@Ctx() context: any) {
+    return this.restaurantService.getUserRestaurant(context.user.id);
   }
 }

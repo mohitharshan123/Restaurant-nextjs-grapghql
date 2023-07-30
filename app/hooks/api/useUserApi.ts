@@ -9,7 +9,7 @@ import {
 } from "../../../src/utils/api";
 
 export type CreateUserPayload = {
-  name: string;
+  restaurantName: string;
   email: string;
   password: string;
 };

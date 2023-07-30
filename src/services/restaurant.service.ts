@@ -32,6 +32,20 @@ class RestaurantService {
       throw new ApolloError(error);
     }
   }
+
+  async getUserRestaurant(_id: string) {
+    try {
+      const restaurant = await RestaurantModel.findOne({
+        userID: _id,
+      });
+      if (!restaurant) {
+        throw new ApolloError("Restaurant not found");
+      }
+      return restaurant;
+    } catch (error) {
+      throw new ApolloError(error);
+    }
+  }
 }
 
 export default RestaurantService;

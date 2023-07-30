@@ -96,13 +96,13 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
                   Name
                 </Label>
                 <Input
-                  id="name"
-                  placeholder="Mohit Harshan"
+                  id="restaurantName"
+                  placeholder="Enter restaurant name"
                   autoCapitalize="none"
                   autoComplete="email"
                   autoCorrect="off"
                   disabled={isSubmitting}
-                  value={formik.values.name}
+                  value={formik.values.restaurantName}
                   onChange={formik.handleChange}
                 />
                 {formik.errors.name && (
@@ -118,7 +118,7 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
               </Label>
               <Input
                 id="email"
-                placeholder="name@example.com"
+                placeholder="Enter email"
                 type="email"
                 autoCapitalize="none"
                 autoComplete="email"
@@ -139,7 +139,7 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
               </Label>
               <Input
                 id="password"
-                placeholder="*********"
+                placeholder="Enter password"
                 type="password"
                 autoCapitalize="none"
                 autoCorrect="off"

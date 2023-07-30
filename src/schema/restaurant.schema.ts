@@ -22,31 +22,34 @@ interface QueryHelpers {
 }
 
 @queryMethod(findByName)
-@index({ name: 1 })
 @ObjectType()
 export class Restaurant {
   @Field(() => String)
   _id: string;
 
   @Field(() => String)
-  @prop({ required: true })
+  @prop({ required: true, index: true })
   name: string;
-
-  @Field(() => String)
-  @prop({ required: true })
-  email: string;
-
-  @Field(() => String)
-  @prop({ required: true })
-  location: string;
-
-  @Field(() => String)
-  @prop({ required: true })
-  contact: string;
 
   @Field({ nullable: true })
   @prop({ required: false })
-  menu: Menu;
+  email?: string;
+
+  @Field({ nullable: true })
+  @prop({ required: false })
+  location?: string;
+
+  @Field({ nullable: true })
+  @prop({ required: false })
+  contact?: string;
+
+  @Field({ nullable: true })
+  @prop({ required: false })
+  menu?: Menu;
+
+  @Field({ nullable: true })
+  @prop({ required: false })
+  userId: string;
 }
 
 export const RestaurantModel = getModelForClass<
@@ -59,14 +62,14 @@ export class CreateRestaurantInput {
   @Field(() => String)
   name: string;
 
-  @Field(() => String)
-  email: string;
-
-  @Field(() => String)
+  @Field({ nullable: true })
   location: string;
 
-  @Field(() => String)
+  @Field({ nullable: true })
   contact: string;
+
+  @Field({ nullable: true })
+  userId: string;
 }
 
 @InputType()

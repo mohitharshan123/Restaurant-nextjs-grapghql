@@ -1,10 +1,15 @@
 mutation createUser($input: CreateUserInput!) {
   createUser(input: $input) {
-    _id
-    name
-    email
+    user {
+      _id
+      email
+    }
+    restaurant {
+      name
+    }
   }
 }
+
 
 mutation login($input: LoginInput!) {
   login(input: $input)
@@ -13,5 +18,13 @@ mutation login($input: LoginInput!) {
  query currentUser {
     me {
       email
+    }
+  }
+
+  query myRestaurant {
+    myRestaurant {
+      name
+      location
+      contact
     }
   }

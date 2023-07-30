@@ -1,14 +1,38 @@
 import { ApolloError } from "apollo-server-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import { CreateUserInput, LoginInput, UserModel } from "@/schema/user.schema";
 
 import Context from "../types/context";
 import { signJwt } from "../utils/jwt";
+import { RestaurantModel } from "@/schema/restaurant.schema";
 
 class UserService {
   async createUser(input: CreateUserInput) {
     return UserModel.create(input);
+  }
+
+  async createUserAndLinkRestaurant(input: CreateUserInput) {
+    const session = await mongoose.startSession();
+    try {
+      await session.startTransaction();
+      const user = await UserModel.create({
+        email: input.email,
+        password: input.password,
+      });
+
+      const restaurantData = {
+        name: input.restaurantName,
+        userId: user._id,
+      };
+      const restaurant = await RestaurantModel.create(restaurantData);
+      return { user, restaurant };
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      throw error;
+    }
   }
 
   async login(input: LoginInput, context: Context) {

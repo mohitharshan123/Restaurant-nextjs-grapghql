@@ -6,7 +6,7 @@ export const LoginSchema = yup.object().shape({
 });
 
 export const SignupSchema = yup.object().shape({
-  name: yup
+  restaurantName: yup
     .string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
@@ -16,7 +16,7 @@ export const SignupSchema = yup.object().shape({
 });
 
 export const AUTHENTICATION_FORM_INITIAL_VALUES = {
-  name: "",
+  restaurantName: "",
   email: "",
   password: "",
 };

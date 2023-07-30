@@ -21,16 +21,22 @@ export type CreateMenuInput = {
 };
 
 export type CreateRestaurantInput = {
-  contact: Scalars['String'];
-  email: Scalars['String'];
-  location: Scalars['String'];
+  contact?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+  userId?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateUserInput = {
   email: Scalars['String'];
-  name: Scalars['String'];
   password: Scalars['String'];
+  restaurantName?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateUserMutationResponse = {
+  __typename?: 'CreateUserMutationResponse';
+  restaurant?: Maybe<Restaurant>;
+  user?: Maybe<User>;
 };
 
 export type GetMenuInput = {
@@ -66,7 +72,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createMenu: Menu;
   createRestaurant: Restaurant;
-  createUser: User;
+  createUser: CreateUserMutationResponse;
   login: Scalars['String'];
 };
 
@@ -94,6 +100,7 @@ export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
   menu: Menu;
+  myRestaurant?: Maybe<Restaurant>;
   restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
 };
@@ -116,13 +123,13 @@ export type Restaurant = {
   location: Scalars['String'];
   menu?: Maybe<Menu>;
   name: Scalars['String'];
+  userId?: Maybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
   _id: Scalars['String'];
   email: Scalars['String'];
-  name: Scalars['String'];
 };
 
 export type GetRestaurantQueryVariables = Exact<{
@@ -142,7 +149,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', _id: string, name: string, email: string } };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'CreateUserMutationResponse', user?: { __typename?: 'User', _id: string, email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -155,6 +162,11 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { __typename?: 'Query', me?: { __typename?: 'User', email: string } | null };
+
+export type MyRestaurantQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant?: { __typename?: 'Restaurant', name: string, location: string, contact: string } | null };
 
 
 export const GetRestaurantDocument = gql`
@@ -183,9 +195,13 @@ export const GetRestaurantsDocument = gql`
 export const CreateUserDocument = gql`
     mutation createUser($input: CreateUserInput!) {
   createUser(input: $input) {
-    _id
-    name
-    email
+    user {
+      _id
+      email
+    }
+    restaurant {
+      name
+    }
   }
 }
     `;
@@ -198,6 +214,15 @@ export const CurrentUserDocument = gql`
     query currentUser {
   me {
     email
+  }
+}
+    `;
+export const MyRestaurantDocument = gql`
+    query myRestaurant {
+  myRestaurant {
+    name
+    location
+    contact
   }
 }
     `;
@@ -223,6 +248,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     currentUser(variables?: CurrentUserQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CurrentUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CurrentUserQuery>(CurrentUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'currentUser', 'query');
+    },
+    myRestaurant(variables?: MyRestaurantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MyRestaurantQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MyRestaurantQuery>(MyRestaurantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'myRestaurant', 'query');
     }
   };
 }
