@@ -1,9 +1,9 @@
 schema: http://localhost:3000/api/graphql
-documents: "./src/**/*.graphql"
+documents: "./server/**/*.graphql"
 headers:
   Authorization: "Bearer ${TOKEN}"
 generates:
-  ./src/generated/graphql.ts:
+  ./server/generated/graphql.ts:
     plugins:
       - typescript
       - typescript-operations

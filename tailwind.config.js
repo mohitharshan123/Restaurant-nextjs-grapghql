@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
@@ -8,7 +9,7 @@ module.exports = withMT({
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./server/**/*.{ts,tsx}",
     "./@/**/*.{ts,tsx}",
   ],
   theme: {

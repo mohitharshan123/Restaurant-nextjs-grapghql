@@ -1,5 +1,5 @@
 import "../styles/global.css";
-import Providers from "@/utils/providers";
+import Providers from "../server/utils/providers";
 import { Metadata } from "next";
 import { PropsWithChildren } from "react";
 

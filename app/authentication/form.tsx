@@ -17,8 +17,7 @@ import {
 } from "./constants";
 import { isEmpty } from "class-validator";
 import { GraphQLError } from "graphql";
-import { redirect, useRouter } from "next/navigation";
-import useAuthenticate from "../hooks/useAuthenticate";
+import { useRouter } from "next/navigation";
 import routes from "../routes";
 
 const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
@@ -105,9 +104,9 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
                   value={formik.values.restaurantName}
                   onChange={formik.handleChange}
                 />
-                {formik.errors.name && (
+                {formik.errors.restaurantName && (
                   <span className="text-xs text-red-500">
-                    {formik.errors.name}
+                    {formik.errors.restaurantName}
                   </span>
                 )}
               </div>
@@ -165,24 +164,6 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
             </Button>
           </div>
         </form>
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
-        <Button variant="outline" type="button" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.gitHub className="mr-2 h-4 w-4" />
-          )}
-          Github
-        </Button>
       </div>
     </>
   );

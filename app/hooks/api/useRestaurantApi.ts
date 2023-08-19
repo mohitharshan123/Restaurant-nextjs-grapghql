@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { myRestaurant, QUERY_KEYS } from "../../../src/utils/api";
+import { myRestaurant, QUERY_KEYS } from "../../../server/utils/api";
 import { prop } from "ramda";
 
 export const useMyRestaurant = () =>

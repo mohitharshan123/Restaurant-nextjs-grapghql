@@ -1,4 +1,4 @@
-import { CreateUserInput, Exact, LoginInput } from "generated/graphql";
+import { CreateUserInput, Exact, LoginInput } from "../server/generated/graphql";
 import { useMutation, useQuery } from "react-query";
 
 import {
@@ -6,7 +6,7 @@ import {
   currentUser,
   login,
   QUERY_KEYS,
-} from "../../../src/utils/api";
+} from "../../../server/utils/api";
 
 export type CreateUserPayload = {
   restaurantName: string;

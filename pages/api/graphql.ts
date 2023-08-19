@@ -8,8 +8,8 @@ import { MicroRequest } from "apollo-server-micro/dist/types";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-import { customAuthChecker } from "../../src/utils/auth";
-import { resolvers } from "../../src/resolvers";
+import { customAuthChecker } from "../../server/utils/auth";
+import { resolvers } from "../../server/resolvers";
 
 class App {
   public server: ApolloServer;

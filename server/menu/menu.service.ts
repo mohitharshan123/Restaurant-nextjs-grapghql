@@ -3,8 +3,8 @@ import {
   CreateMenuInput,
   GetMenuInput,
   MenuModel,
-} from "menu/menu.schema";
-import { RestaurantModel } from "restaurant/restaurant.schema";
+} from "./menu.schema";
+import { RestaurantModel } from "../restaurant/restaurant.schema";
 import { ApolloError } from "apollo-server-errors";
 
 import { createMenuItems } from "../menu-item/utils";
