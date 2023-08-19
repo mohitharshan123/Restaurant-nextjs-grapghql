@@ -7,7 +7,7 @@ const createMenuItems = (menu: Menu, items: Array<MenuItemInput>) =>
     menuItem.name = item.name;
     menuItem.description = item.description;
     menuItem.price = item.price;
-    menuItem.imageUrl = item.imageUrl;
+    menuItem.imageID = item.imageID;
     menuItem.menu = menu;
     menuItem.save();
     return menuItem;

@@ -18,13 +18,13 @@ export type Scalars = {
 export type Category = {
   __typename?: 'Category';
   description: Scalars['String'];
-  imageUrl: Scalars['String'];
+  imageID: Scalars['String'];
   name: Scalars['String'];
 };
 
 export type CreateCategoryInput = {
   description: Scalars['String'];
-  imageUrl: Scalars['String'];
+  imageID: Scalars['String'];
   name: Scalars['String'];
 };
 
@@ -70,14 +70,14 @@ export type MenuItem = {
   __typename?: 'MenuItem';
   category: Category;
   description: Scalars['String'];
-  imageUrl: Scalars['String'];
+  imageID: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['String'];
 };
 
 export type MenuItemInput = {
   description: Scalars['String'];
-  imageUrl: Scalars['String'];
+  imageID: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['Float'];
 };
@@ -163,7 +163,7 @@ export type CreateCategoryMutationVariables = Exact<{
 }>;
 
 
-export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', name: string, description: string, imageUrl: string } };
+export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', name: string, description: string, imageID: string } };
 
 export type GetRestaurantQueryVariables = Exact<{
   id: Scalars['String'];
@@ -207,7 +207,7 @@ export const CreateCategoryDocument = gql`
   createCategory(input: $input) {
     name
     description
-    imageUrl
+    imageID
   }
 }
     `;
@@ -269,7 +269,7 @@ export const MyRestaurantDocument = gql`
 }
     `;
 
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?: Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
@@ -277,25 +277,25 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     createCategory(variables: CreateCategoryMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCategoryMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateCategoryMutation>(CreateCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createCategory', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateCategoryMutation>(CreateCategoryDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'createCategory', 'mutation');
     },
     getRestaurant(variables: GetRestaurantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantQuery>(GetRestaurantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurant', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantQuery>(GetRestaurantDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'getRestaurant', 'query');
     },
     getRestaurants(variables?: GetRestaurantsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantsQuery>(GetRestaurantsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurants', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantsQuery>(GetRestaurantsDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'getRestaurants', 'query');
     },
     createUser(variables: CreateUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createUser', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'createUser', 'mutation');
     },
     login(variables: LoginMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<LoginMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'login', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'login', 'mutation');
     },
     currentUser(variables?: CurrentUserQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CurrentUserQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CurrentUserQuery>(CurrentUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'currentUser', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<CurrentUserQuery>(CurrentUserDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'currentUser', 'query');
     },
     myRestaurant(variables?: MyRestaurantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MyRestaurantQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<MyRestaurantQuery>(MyRestaurantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'myRestaurant', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<MyRestaurantQuery>(MyRestaurantDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'myRestaurant', 'query');
     }
   };
 }

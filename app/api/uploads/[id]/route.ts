@@ -1,6 +1,7 @@
 
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
+import { BUCKET_NAME } from "../../upload/route";
 
 type Params = {
     params: { id: string };
@@ -8,9 +9,9 @@ type Params = {
 
 export async function GET(req: Request, { params }: Params) {
     await mongoose.connect(process.env.DATABASE_URL ?? "")
-    const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'files' });
+    const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: BUCKET_NAME });
     const _id = params.id as string;
-    
+
     if (!_id) {
         return new NextResponse(null, { status: 400, statusText: "Bad Request" });
     }

@@ -3,8 +3,6 @@ import { ApolloServer } from "apollo-server-micro";
 import { buildSchema } from "type-graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import HttpHeadersPlugin from "apollo-server-plugin-http-headers";
-import { createReadStream } from 'fs';
-import { createModel } from 'mongoose-gridfs';
 import { MicroRequest } from "apollo-server-micro/dist/types";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";

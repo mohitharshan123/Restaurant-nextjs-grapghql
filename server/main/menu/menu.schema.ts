@@ -33,7 +33,7 @@ class MenuItemInput {
   price: number;
 
   @Field()
-  imageUrl: string;
+  imageID: string;
 }
 
 @InputType()

@@ -27,23 +27,18 @@ type CategoryFormProps = {
 const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
     const { mutate: createCategory, isLoading: isCreatingCategory } = useCreateCategory();
     const [uploadedFileId, setUploadedFileId] = useState<string>("")
-
-    console.log(uploadedFileId)
-    const [errors, setErrors] = useState<Array<GraphQLError>>([]);
-
     const formik = useFormik({
         initialValues: CATEGORY_FORM_INITIAL_VALUES,
         validationSchema: CategorySchema,
         validateOnMount: false,
         enableReinitialize: true,
         onSubmit: (values) => {
-            console.log({ values })
-            createCategory({ input: values }, { onSuccess: () => console.log("success"), onError: (error) => console.log(error) })
+            createCategory({ input: { ...values, imageID: uploadedFileId } }, { onSuccess: () => console.log("success"), onError: (error) => console.log(error) })
         },
     });
 
     return (
-        <Drawer open={isOpen} onClose={() => setIsOpen(false)} placement="right" overlay={false}>
+        <Drawer open={isOpen} onClose={() => setIsOpen(false)} placement="right" overlay={false} className="overflow-auto">
             <div className="mb-2 flex items-center justify-between p-4">
                 <Typography variant="h5" color="blue-gray">
                     Create category

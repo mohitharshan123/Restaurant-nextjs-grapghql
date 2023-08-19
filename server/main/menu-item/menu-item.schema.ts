@@ -22,7 +22,7 @@ export class MenuItem {
 
   @Field(() => String)
   @prop({ required: true })
-  imageUrl: string;
+  imageID: string;
 }
 
 export const MenuItemModel = getModelForClass(MenuItem);

@@ -13,7 +13,7 @@ export class Category {
 
   @Field(() => String)
   @prop({ required: true })
-  imageUrl?: string;
+  imageID?: string;
 }
 
 export const CategoryModel = getModelForClass(Category);
@@ -27,7 +27,7 @@ export class CreateCategoryInput {
   description: string;
 
   @Field(() => String)
-  imageUrl?: string;
+  imageID?: string;
 }
 
 

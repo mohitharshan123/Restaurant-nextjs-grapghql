@@ -2,10 +2,12 @@ import mongoose from 'mongoose'
 import { NextRequest, NextResponse } from 'next/server'
 import { Readable } from 'stream';
 
+export const BUCKET_NAME = "files"
+
 export const storeFile = async (upload: { filename: string, createReadStream: any, mimetype: string }) => {
     const { filename, createReadStream, mimetype } = await upload;
     await mongoose.connect(process.env.DATABASE_URL ?? "")
-    const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'files' });
+    const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: BUCKET_NAME });
     const uploadStream = bucket.openUploadStream(filename, {
         contentType: mimetype
     });
