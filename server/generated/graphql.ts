@@ -203,7 +203,7 @@ export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant?: { __typen
 
 
 export const CreateCategoryDocument = gql`
-    mutation CreateCategory($input: CreateCategoryInput!) {
+    mutation createCategory($input: CreateCategoryInput!) {
   createCategory(input: $input) {
     name
     description
@@ -276,8 +276,8 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    CreateCategory(variables: CreateCategoryMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCategoryMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateCategoryMutation>(CreateCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateCategory', 'mutation');
+    createCategory(variables: CreateCategoryMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCategoryMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateCategoryMutation>(CreateCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createCategory', 'mutation');
     },
     getRestaurant(variables: GetRestaurantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantQuery>(GetRestaurantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurant', 'query');

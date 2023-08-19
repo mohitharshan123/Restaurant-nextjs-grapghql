@@ -10,5 +10,6 @@ export const {
   login,
   currentUser,
   myRestaurant,
+  createCategory
 } = getSdk(gqlClient);
 

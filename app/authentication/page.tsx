@@ -12,7 +12,7 @@ const AuthenticationPage: React.FC<PropsWithChildren> = () => {
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
   if (isLoadingUser) return null;
 
-  if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard.index);
+  if (!isLoadingUser && currentUser?.me) redirect(routes.dashboard.menu);
 
   return (
     <>

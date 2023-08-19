@@ -1,10 +1,12 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons";
-import { Button } from "@/components/button";
-import { Input } from "@/components/input";
-import { Label } from "@/components/label";
+import {
+  Input,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
+import { PresentationChartBarIcon } from "@heroicons/react/24/solid";
+
 import { useCreateUser, useLogin } from "../hooks/api/useUserApi";
 import { useFormik } from "formik";
 import { PropsWithChildren, useState } from "react";
@@ -38,7 +40,10 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
       if (isSignup) {
         createUser(
           { input: { ...values } },
-          { onSuccess: () => setIsSignup(false) },
+          {
+            onSuccess: () => setIsSignup(false),
+            onError: (error: any) => setErrors(error.response.errors),
+          },
         );
         return;
       }
@@ -46,7 +51,8 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
         { input: pick(["email", "password"], values) },
         {
           onSuccess: (res) => {
-            if (res.login) router.push(routes.dashboard.index);
+            console.log({ res })
+            if (res.login) router.push(routes.dashboard.menu);
           },
           onError: (error: any) => setErrors(error.response.errors),
         },
@@ -59,8 +65,9 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          <a
+        <div className="flex flex-row w-screen space-x-2">
+          <Typography
+            variant="h3"
             className={clsx("cursor-pointer", {
               "text-gray-500": isSignup,
               "text-black": !isSignup,
@@ -68,9 +75,10 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
             onClick={() => setIsSignup((isSignup) => !isSignup)}
           >
             Login{" "}
-          </a>
-          /{" "}
-          <a
+          </Typography>
+          <Typography variant="h3">/</Typography>
+          <Typography
+            variant="h3"
             className={clsx("cursor-pointer", {
               "text-black": isSignup,
               "text-gray-500": !isSignup,
@@ -78,25 +86,17 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
             onClick={() => setIsSignup((isSignup) => !isSignup)}
           >
             Create an account
-          </a>
-        </h1>
-        {isSignup && (
-          <p className="text-sm text-muted-foreground">
-            Enter your email below to create your account
-          </p>
-        )}
+          </Typography>
+        </div>
       </div>
-      <div className={cn("grid gap-6", className)} {...props}>
+      <div>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-2">
             {isSignup && (
               <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="email">
-                  Name
-                </Label>
                 <Input
                   id="restaurantName"
-                  placeholder="Enter restaurant name"
+                  label="Restaurant Name"
                   autoCapitalize="none"
                   autoComplete="email"
                   autoCorrect="off"
@@ -105,19 +105,16 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
                   onChange={formik.handleChange}
                 />
                 {formik.errors.restaurantName && (
-                  <span className="text-xs text-red-500">
+                  <Typography variant="small" color="red">
                     {formik.errors.restaurantName}
-                  </span>
+                  </Typography>
                 )}
               </div>
             )}
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="email">
-                Email
-              </Label>
               <Input
+                label="Email"
                 id="email"
-                placeholder="Enter email"
                 type="email"
                 autoCapitalize="none"
                 autoComplete="email"
@@ -127,40 +124,33 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
                 onChange={formik.handleChange}
               />
               {formik.errors.email && (
-                <span className="text-xs text-red-500">
+                <Typography variant="small" color="red">
                   {formik.errors.email}
-                </span>
+                </Typography>
               )}
             </div>
-            <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="email">
-                Password
-              </Label>
-              <Input
-                id="password"
-                placeholder="Enter password"
-                type="password"
-                autoCapitalize="none"
-                autoCorrect="off"
-                disabled={isSubmitting}
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              />
-              {formik.errors.password && (
-                <span className="text-xs text-red-500">
-                  {formik.errors.password}
-                </span>
-              )}
-            </div>
+            <Input
+              label="Password"
+              id="password"
+              type="password"
+              autoCapitalize="none"
+              autoCorrect="off"
+              disabled={isSubmitting}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
+            {formik.errors.password && (
+              <Typography variant="small" color="red">
+                {formik.errors.password}
+              </Typography>
+            )}
             {!isEmpty(errors) &&
               errors.map((error: GraphQLError) => (
-                <span className="text-xs text-red-500">{error.message}</span>
+                <Typography variant="small" color="red">{error.message}</Typography>
               ))}
-            <Button disabled={isSubmitting}>
-              {isSubmitting && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
+            <Button disabled={isSubmitting} className="rounded-xl flex flex-row items-center space-x-4 justify-center" type="submit">
               {isSignup ? "Sign Up with Email" : "Get started"}
+              {isSubmitting && <PresentationChartBarIcon className="ml-2 h-4 w-4 animate-spin" />}
             </Button>
           </div>
         </form>

@@ -7,7 +7,7 @@ export type Link = {
 };
 
 export const SIDEBAR_LINKS: Array<Link> = [
-  { label: "Menu", path: routes.dashboard.index, targetSegment: null },
+  { label: "Menu", path: routes.dashboard.menu, targetSegment: "menu" },
   { label: "Tables", path: routes.dashboard.tables, targetSegment: "tables" },
   {
     label: "Feedbacks",

@@ -1,6 +1,6 @@
 export default {
   dashboard: {
-    index: "/dashboard",
+    menu: "/dashboard/menu",
     feedbacks: "/dashboard/feedbacks",
     tables: "/dashboard/tables",
   },

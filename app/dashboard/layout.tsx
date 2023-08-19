@@ -2,7 +2,7 @@
 
 import React, { PropsWithChildren } from "react";
 
-import ProtectedRoute from "../../components/ProtectedRoute";
+import ProtectedRoute from "../../components/protected-route";
 
 import Sidebar from "./sidebar";
 import routes from "../routes";

@@ -17,6 +17,12 @@ class UserService {
     const session = await mongoose.startSession();
     try {
       await session.startTransaction();
+
+      const existingUser = await UserModel.findOne({ email: input.email });
+      if (existingUser) {
+        throw new Error('User with this email already exists');
+      }
+      
       const user = await UserModel.create({
         email: input.email,
         password: input.password,
