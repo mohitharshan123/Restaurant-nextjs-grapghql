@@ -14,6 +14,7 @@ import { useCreateCategory } from "../../hooks/api/useCategoryApi";
 import { GraphQLError } from "graphql";
 import { CategorySchema, CATEGORY_FORM_INITIAL_VALUES } from "./constants";
 import { useFormik } from "formik";
+import ImageUploader from "../../../components/image-uploader";
 
 
 type CategoryFormProps = {
@@ -63,6 +64,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
                         </Typography>
                     )}
                 </div>
+                <ImageUploader />
                 <Button type="submit" className="rounded-xl">Create</Button>
             </form>
         </Drawer >

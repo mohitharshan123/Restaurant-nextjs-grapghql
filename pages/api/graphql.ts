@@ -3,7 +3,8 @@ import { ApolloServer } from "apollo-server-micro";
 import { buildSchema } from "type-graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import HttpHeadersPlugin from "apollo-server-plugin-http-headers";
-
+import { createReadStream } from 'fs';
+import { createModel } from 'mongoose-gridfs';
 import { MicroRequest } from "apollo-server-micro/dist/types";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
@@ -20,7 +21,7 @@ class App {
 
   async connectToDatabase() {
     try {
-      await mongoose.connect(process.env.DATABASE_URL);
+      await mongoose.connect(process.env.DATABASE_URL ?? "");
       console.log("Connected to database");
     } catch (error) {
       console.error("Failed to connect to MongoDB", error);
@@ -53,7 +54,7 @@ class App {
         try {
           const decodedToken = jwt.verify(token, secretKey);
           user = decodedToken;
-        } catch (error) {}
+        } catch (error) { }
         return user
           ? { user, setCookies: new Array() }
           : { req, res, setCookies: new Array() };
@@ -75,7 +76,7 @@ export const config = {
   },
 };
 const app = new App();
-const connection = await app.connectServer();
+export const connection = await app.connectServer();
 const server = app.server;
 
 export default async function handler(req: MicroRequest, res: any) {
