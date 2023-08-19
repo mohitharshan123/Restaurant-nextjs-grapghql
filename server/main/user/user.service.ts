@@ -2,11 +2,11 @@ import { ApolloError } from "apollo-server-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import { CreateUserInput, LoginInput, UserModel } from "user/user.schema";
+import { CreateUserInput, LoginInput, UserModel } from "main/user/user.schema";
 
-import Context from "../types/context";
-import { signJwt } from "../utils/jwt";
-import { RestaurantModel } from "restaurant/restaurant.schema";
+import { signJwt } from "../../utils/jwt";
+import { RestaurantModel } from "main/restaurant/restaurant.schema";
+import { Context } from "@/types/";
 
 class UserService {
   async createUser(input: CreateUserInput) {
@@ -73,7 +73,7 @@ class UserService {
 
   async getUserIdFromToken(token: string) {
     try {
-      const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
+      const decodedToken: any = jwt.verify(token, process.env.PRIVATE_KEY ?? "");
       const user = UserModel.findOne({ id: decodedToken.id });
       return user;
     } catch (error) {

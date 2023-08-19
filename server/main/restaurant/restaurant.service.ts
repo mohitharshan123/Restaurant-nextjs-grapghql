@@ -2,7 +2,7 @@ import { ApolloError } from "apollo-server-errors";
 import {
   CreateRestaurantInput,
   RestaurantModel,
-} from "restaurant/restaurant.schema";
+} from "main/restaurant/restaurant.schema";
 
 class RestaurantService {
   async createRestaurant(input: CreateRestaurantInput) {

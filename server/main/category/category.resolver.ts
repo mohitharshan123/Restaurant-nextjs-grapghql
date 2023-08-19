@@ -1,5 +1,5 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateMenuInput, GetMenuInput, Menu } from "menu/menu.schema";
+import { CreateMenuInput, GetMenuInput, Menu } from "main/menu/menu.schema";
 import CategoryService from "./category.service";
 import { Category, CreateCategoryInput, GetCategoryInput } from "./category.schema";
 

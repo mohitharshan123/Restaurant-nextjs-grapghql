@@ -8,10 +8,10 @@ import {
   ObjectType,
   Field,
 } from "type-graphql";
-import { CreateUserInput, LoginInput, User } from "user/user.schema";
-import UserService from "user/user.service";
-import RestaurantService from "restaurant/restaurant.service";
-import { Restaurant } from "restaurant/restaurant.schema";
+import { CreateUserInput, LoginInput, User } from "main/user/user.schema";
+import UserService from "main/user/user.service";
+import RestaurantService from "main/restaurant/restaurant.service";
+import { Restaurant } from "main/restaurant/restaurant.schema";
 
 @ObjectType()
 class CreateUserMutationResponse {

@@ -1,11 +1,8 @@
-import { ResolverData } from "type-graphql";
-import UserService from "../user/user.service";
 import { AuthChecker } from "type-graphql";
-import Context from "@/types/context";
+import Context from "@/types/";
 
 export const customAuthChecker: AuthChecker<Context> = (
-  { root, args, context, info },
-  roles,
+  { context },
 ) => {
   if (!context.user) return false;
   return true;
