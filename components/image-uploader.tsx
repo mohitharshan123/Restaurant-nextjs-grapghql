@@ -3,9 +3,8 @@
 import axios from "axios";
 import React, { FormEvent, useRef, useState } from "react";
 
-const ImageUploader = () => {
+const ImageUploader = ({ setUploadedFileId }) => {
     const [file, setFile] = useState<File>()
-    const ref = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -15,12 +14,11 @@ const ImageUploader = () => {
             const data = new FormData()
             data.set('file', file, file.name)
 
-            const res = await fetch('/api/upload', {
-                method: 'POST',
-                body: data
-            })
-            // handle the error
-            if (!res.ok) throw new Error(await res.text())
+            const res = await axios.post('/api/upload', data)
+            console.log(res.data?.fileId)
+
+            setUploadedFileId(res.data?.fileId)
+            if (!res.data) throw new Error("An error occurred")
         } catch (e: any) {
             // Handle errors herep
             console.error(e)

@@ -10,6 +10,8 @@ import {
 import {
     XMarkIcon
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
+
 import { useCreateCategory } from "../../hooks/api/useCategoryApi";
 import { GraphQLError } from "graphql";
 import { CategorySchema, CATEGORY_FORM_INITIAL_VALUES } from "./constants";
@@ -24,6 +26,9 @@ type CategoryFormProps = {
 
 const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
     const { mutate: createCategory, isLoading: isCreatingCategory } = useCreateCategory();
+    const [uploadedFileId, setUploadedFileId] = useState<string>("")
+
+    console.log(uploadedFileId)
     const [errors, setErrors] = useState<Array<GraphQLError>>([]);
 
     const formik = useFormik({
@@ -64,7 +69,8 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
                         </Typography>
                     )}
                 </div>
-                <ImageUploader />
+                <ImageUploader {...{ setUploadedFileId }} />
+                {uploadedFileId && <Image src={`/api/uploads/${uploadedFileId}`} alt="category-image" width={299} height={233} />}
                 <Button type="submit" className="rounded-xl">Create</Button>
             </form>
         </Drawer >

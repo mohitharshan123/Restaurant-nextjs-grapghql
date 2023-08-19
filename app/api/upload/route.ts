@@ -4,6 +4,7 @@ import { Readable } from 'stream';
 
 export const storeFile = async (upload: { filename: string, createReadStream: any, mimetype: string }) => {
     const { filename, createReadStream, mimetype } = await upload;
+    await mongoose.connect(process.env.DATABASE_URL ?? "")
     const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'files' });
     const uploadStream = bucket.openUploadStream(filename, {
         contentType: mimetype
@@ -20,7 +21,7 @@ export const storeFile = async (upload: { filename: string, createReadStream: an
 
 export async function POST(request: NextRequest) {
     const data = await request.formData()
-    const file: any = data.get('file')
+    const file: Blob = data.get('file') as Blob
     if (!file) {
         return NextResponse.json({ success: false })
     }
