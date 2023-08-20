@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { PresentationChartBarIcon } from "@heroicons/react/24/solid";
+import { Spinner } from "@material-tailwind/react";
 
 import { useCreateUser, useLogin } from "../hooks/api/useUserApi";
 import { useFormik } from "formik";
@@ -152,7 +153,7 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
               ))}
             <Button disabled={isSubmitting} className="rounded-xl flex flex-row items-center space-x-4 justify-center" type="submit">
               {isSignup ? "Sign Up with Email" : "Get started"}
-              {isSubmitting && <PresentationChartBarIcon className="ml-2 h-4 w-4 animate-spin" />}
+              {isSubmitting && <Spinner className="w-4 ml-4" />}
             </Button>
           </div>
         </form>

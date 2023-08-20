@@ -39,7 +39,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
                                 hideProgressBar: true, autoClose: 2000,
                                 type: 'success', position: 'bottom-right'
                             })
-                        setIsOpen(false);
+                        handleClose();
                     },
 
                     onError: (error) => console.log(error)

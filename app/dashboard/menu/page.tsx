@@ -49,23 +49,25 @@ const Menu: React.FC = () => {
             {category.description}
             <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
               {category.items.map((item) => (
-                <Card key={item._id} className="w-full cursor-pointer">
-                  <CardHeader color="blue-gray" className="relative h-32">
-                    <Image
-                      src={`/api/uploads/${item.imageID}`}
-                      alt="item-image"
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
-                    />
-                  </CardHeader>
-                  <CardBody>
-                    <Typography variant="h5" color="blue-gray" className="mb-2">
-                      {item.name}
-                    </Typography>
-                    <Typography>{item.description}</Typography>
-                  </CardBody>
-                </Card>
+                <div className="cursor-pointer">
+                  <Card key={item._id} className="w-full cursor-pointer">
+                    <CardHeader color="blue-gray" className="relative h-32 cursor-pointer">
+                      <Image
+                        src={`/api/uploads/${item.imageID}`}
+                        alt="item-image"
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
+                      />
+                    </CardHeader>
+                    <CardBody className="cursor-pointer h-64 overflow-y-scroll">
+                      <Typography variant="h5" color="blue-gray" className="mb-2">
+                        {item.name}
+                      </Typography>
+                      <Typography variant="small" className="overflow-scroll">{item.description}</Typography>
+                    </CardBody>
+                  </Card>
+                </div>
               ))}
             </div>
           </AccordionBody>

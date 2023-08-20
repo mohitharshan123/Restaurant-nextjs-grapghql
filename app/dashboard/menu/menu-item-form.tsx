@@ -52,7 +52,7 @@ const MenuItemForm: React.FC<MenuItemFormProps> = ({ isOpen, setIsOpen }) => {
                                 hideProgressBar: true, autoClose: 2000,
                                 type: 'success', position: 'bottom-right'
                             })
-                        setIsOpen(false);
+                        handleClose();
                     },
                     onError: (error) => console.log(error)
                 })
@@ -60,8 +60,8 @@ const MenuItemForm: React.FC<MenuItemFormProps> = ({ isOpen, setIsOpen }) => {
     });
 
     const handleClose = () => {
-        setIsOpen(false); 
-        formik.resetForm(); 
+        setIsOpen(false);
+        formik.resetForm();
         setUploadedFileId("")
     }
 
