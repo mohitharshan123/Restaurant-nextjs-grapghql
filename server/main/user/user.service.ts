@@ -7,6 +7,7 @@ import { CreateUserInput, LoginInput, UserModel } from "main/user/user.schema";
 import { signJwt } from "../../utils/jwt";
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
 import { Context } from "@/types/";
+import { MenuModel } from "main/menu/menu.schema";
 
 class UserService {
   async createUser(input: CreateUserInput) {
@@ -22,7 +23,7 @@ class UserService {
       if (existingUser) {
         throw new Error('User with this email already exists');
       }
-      
+
       const user = await UserModel.create({
         email: input.email,
         password: input.password,
@@ -33,6 +34,9 @@ class UserService {
         userId: user._id,
       };
       const restaurant = await RestaurantModel.create(restaurantData);
+      const menu = await MenuModel.create({ categories: [] });
+      restaurant.menu = menu;
+      restaurant.save()
       return { user, restaurant };
     } catch (error) {
       await session.abortTransaction();

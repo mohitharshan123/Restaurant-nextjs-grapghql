@@ -4,12 +4,6 @@ query getRestaurant($id: String!) {
     email
     contact
     location
-    menu {
-      items {
-        name
-        description
-      }
-    }
   }
 }
 

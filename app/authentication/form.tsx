@@ -9,7 +9,7 @@ import { PresentationChartBarIcon } from "@heroicons/react/24/solid";
 
 import { useCreateUser, useLogin } from "../hooks/api/useUserApi";
 import { useFormik } from "formik";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { pick } from "ramda";
 import clsx from "clsx";
 import {
@@ -28,6 +28,8 @@ const Form: React.FC<PropsWithChildren> = ({ className, ...props }: any) => {
   const [errors, setErrors] = useState<Array<GraphQLError>>([]);
   const [isSignup, setIsSignup] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => setErrors([]), [isSignup]);
 
   const formik = useFormik({
     initialValues: AUTHENTICATION_FORM_INITIAL_VALUES,

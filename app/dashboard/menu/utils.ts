@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 type RenderActionProps = {
-    setIsItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsMenuItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
     setIsCategoryFormOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -16,7 +16,7 @@ export type ActionItem = {
 }
 
 
-export const renderActions = ({ setIsCategoryFormOpen, setIsItemFormOpen }: RenderActionProps): ActionItem[] => ([{
+export const renderActions = ({ setIsCategoryFormOpen, setIsMenuItemFormOpen }: RenderActionProps): ActionItem[] => ([{
     label: "Category",
     icon: CircleStackIcon,
     action: () => setIsCategoryFormOpen(true)
@@ -24,5 +24,5 @@ export const renderActions = ({ setIsCategoryFormOpen, setIsItemFormOpen }: Rend
 {
     label: "Item",
     icon: CogIcon,
-    action: () => setIsItemFormOpen(true)
+    action: () => setIsMenuItemFormOpen(true)
 }])

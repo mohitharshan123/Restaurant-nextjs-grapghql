@@ -10,14 +10,11 @@ import {
 import {
     XMarkIcon
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
 
 import { useCreateCategory } from "../../hooks/api/useCategoryApi";
-import { GraphQLError } from "graphql";
 import { CategorySchema, CATEGORY_FORM_INITIAL_VALUES } from "./constants";
 import { useFormik } from "formik";
-import ImageUploader from "../../../components/image-uploader";
-
+import { toast } from "react-toastify";
 
 type CategoryFormProps = {
     isOpen: boolean,
@@ -26,21 +23,39 @@ type CategoryFormProps = {
 
 const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
     const { mutate: createCategory, isLoading: isCreatingCategory } = useCreateCategory();
-    const [uploadedFileId, setUploadedFileId] = useState<string>("")
     const formik = useFormik({
         initialValues: CATEGORY_FORM_INITIAL_VALUES,
         validationSchema: CategorySchema,
         validateOnMount: false,
         enableReinitialize: true,
+        validateOnChange: false,
         onSubmit: (values) => {
-            createCategory({ input: { ...values, imageID: uploadedFileId } }, { onSuccess: () => console.log("success"), onError: (error) => console.log(error) })
+            createCategory(
+                { input: { ...values } },
+                {
+                    onSuccess: () => {
+                        toast('Successfully Created',
+                            {
+                                hideProgressBar: true, autoClose: 2000,
+                                type: 'success', position: 'bottom-right'
+                            })
+                        setIsOpen(false);
+                    },
+
+                    onError: (error) => console.log(error)
+                })
         },
     });
 
+    const handleClose = () => {
+        setIsOpen(false);
+        formik.resetForm();
+    }
+
     return (
-        <Drawer open={isOpen} onClose={() => setIsOpen(false)} placement="right" overlay={false} className="overflow-auto">
+        <Drawer open={isOpen} onClose={handleClose} placement="right" overlay={false} className="overflow-auto">
             <div className="mb-2 flex items-center justify-between p-4">
-                <Typography variant="h5" color="blue-gray">
+                <Typography variant="h4" color="blue-gray">
                     Create category
                 </Typography>
                 <IconButton variant="text" color="blue-gray" onClick={() => setIsOpen(false)}>
@@ -64,11 +79,9 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ isOpen, setIsOpen }) => {
                         </Typography>
                     )}
                 </div>
-                <ImageUploader {...{ setUploadedFileId }} />
-                {uploadedFileId && <Image src={`/api/uploads/${uploadedFileId}`} alt="category-image" width={299} height={233} />}
-                <Button type="submit" className="rounded-xl">Create</Button>
+                <Button type="submit" className="rounded-xl" disabled={isCreatingCategory}>Create</Button>
             </form>
-        </Drawer >
+        </Drawer>
     );
 }
 

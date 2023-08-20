@@ -1,19 +1,76 @@
 "use client";
 
-import React, { PropsWithChildren, useState } from "react";
+import React, { useState } from "react";
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Typography,
+} from "@material-tailwind/react";
+import Image from "next/image";
+
 import Actions from "../../../components/actions";
+import { useGetMenu } from "../../hooks/api/useRestaurantApi";
 import CategoryForm from "./category-form";
 import { renderActions } from "./utils";
+import { UseQueryResult } from "react-query";
+import MenuItemForm from "./menu-item-form";
+
+export type Category = {
+  _id: string,
+  name: string,
+  description: string,
+  items: Array<any>
+}
 
 const Menu: React.FC = () => {
   const [isCategoryFormOpen, setIsCategoryFormOpen] = useState<boolean>(false);
-  const [isMenuItemFormOpen, setIsItemFormOpen] = useState<boolean>(false)
+  const [isMenuItemFormOpen, setIsMenuItemFormOpen] = useState<boolean>(false)
+
+  const { data: menu, isLoading } = useGetMenu() as UseQueryResult<{
+    categories: Category[];
+  }>;
+  if (!menu || isLoading) return null
 
   return (
     <div className="relative h-full w-full">
-      <p>Menu</p>
-      <Actions actions={renderActions({ setIsCategoryFormOpen, setIsItemFormOpen })} />
+      <Actions actions={renderActions({ setIsCategoryFormOpen, setIsMenuItemFormOpen })} />
       <CategoryForm isOpen={isCategoryFormOpen} setIsOpen={setIsCategoryFormOpen} />
+      <MenuItemForm isOpen={isMenuItemFormOpen} setIsOpen={setIsMenuItemFormOpen} />
+      {menu?.categories.map((category: Category) => (
+        <Accordion open className="flex flex-col space-y-2">
+          <AccordionHeader >{category.name}</AccordionHeader>
+          <AccordionBody>
+            {category.description}
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
+              {category.items.map((item) => (
+                <Card key={item._id} className="w-full cursor-pointer">
+                  <CardHeader color="blue-gray" className="relative h-32">
+                    <Image
+                      src={`/api/uploads/${item.imageID}`}
+                      alt="item-image"
+                      layout="fill"
+                      objectFit="cover"
+                      objectPosition="center"
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <Typography variant="h5" color="blue-gray" className="mb-2">
+                      {item.name}
+                    </Typography>
+                    <Typography>{item.description}</Typography>
+                  </CardBody>
+                </Card>
+              ))}
+            </div>
+          </AccordionBody>
+        </Accordion>
+      ))}
     </div>
   );
 };

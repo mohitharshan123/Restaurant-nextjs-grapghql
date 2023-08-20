@@ -2,7 +2,30 @@ mutation createCategory($input: CreateCategoryInput!) {
   createCategory(input: $input) {
     name
     description
-    imageID
   }
 }
 
+query getMenu {
+  menu {
+   categories {
+     _id
+    name
+    description
+    items {
+      name
+      description
+      price
+      imageID
+    }
+   }
+  }
+}
+
+mutation createMenuItem($input: CreateMenuItemInput!) {
+  createItem(input: $input) {
+    name 
+    description
+    price
+    imageID
+  }
+}

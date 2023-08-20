@@ -1,43 +1,52 @@
-"use client";
-
+import { Button } from "@material-tailwind/react";
 import axios from "axios";
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useRef } from "react";
 
-const ImageUploader = ({ setUploadedFileId }) => {
-    const [file, setFile] = useState<File>()
+interface ImageUploaderProps {
+    setUploadedFileId: React.Dispatch<React.SetStateAction<string>>;
+}
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (!file) return
+const ImageUploader: React.FC<ImageUploaderProps> = ({ setUploadedFileId }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleSubmit = async (file: File | null) => {
+        if (!file) return;
 
         try {
-            const data = new FormData()
-            data.set('file', file, file.name)
-
-            const res = await axios.post('/api/upload', data)
-            console.log(res.data?.fileId)
-
-            setUploadedFileId(res.data?.fileId)
-            if (!res.data) throw new Error("An error occurred")
+            const data = new FormData();
+            data.set("file", file, file.name);
+            const res = await axios.post<{ fileId: string }>("/api/upload", data);
+            setUploadedFileId(res.data.fileId);
+            if (!res.data) throw new Error("An error occurred");
         } catch (e: any) {
-            // Handle errors herep
-            console.error(e)
+            console.error(e);
         }
     };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (e.target.files) {
+            handleSubmit(e.target.files[0]);
+        }
+    };
+
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input type="file" name="files" onChange={(e) => setFile(e.target.files?.[0])}
-                />
-                <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="px-2 py-1 rounded-md bg-violet-50 text-violet-500"
-                >
-                    Upload
-                </button>
-            </form>
-        </>
+        <form onSubmit={(e: FormEvent) => e.preventDefault()}>
+            <input
+                ref={inputRef}
+                type="file"
+                name="files"
+                onChange={handleFileChange}
+                className="hidden"
+            />
+            <Button
+                type="button"
+                onClick={() => inputRef.current?.click()}
+                className="rounded-xl"
+            >
+                Upload image
+            </Button>
+        </form>
     );
 };
 

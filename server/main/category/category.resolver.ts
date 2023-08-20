@@ -1,5 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateMenuInput, GetMenuInput, Menu } from "main/menu/menu.schema";
+import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
 import CategoryService from "./category.service";
 import { Category, CreateCategoryInput, GetCategoryInput } from "./category.schema";
 
@@ -10,8 +9,9 @@ export default class CategoryResolver {
   }
 
   @Mutation(() => Category)
-  createCategory(@Arg("input") input: CreateCategoryInput) {
-    return this.categoryService.createCategory(input);
+  @Authorized()
+  createCategory(@Arg("input") input: CreateCategoryInput, @Ctx() context: any) {
+    return this.categoryService.createCategory(input, context.user);
   }
 
   @Query(() => Category)

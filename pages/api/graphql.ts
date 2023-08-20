@@ -18,6 +18,7 @@ class App {
   }
 
   async connectToDatabase() {
+    console.log("Trying to connect...")
     try {
       await mongoose.connect(process.env.DATABASE_URL ?? "");
       console.log("Connected to database");
@@ -74,7 +75,7 @@ export const config = {
   },
 };
 const app = new App();
-export const connection = await app.connectServer();
+const connection = await app.connectServer();
 const server = app.server;
 
 export default async function handler(req: MicroRequest, res: any) {

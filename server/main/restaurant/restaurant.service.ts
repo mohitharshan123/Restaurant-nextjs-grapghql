@@ -1,4 +1,5 @@
 import { ApolloError } from "apollo-server-errors";
+import { MenuModel } from "main/menu/menu.schema";
 import {
   CreateRestaurantInput,
   RestaurantModel,
@@ -6,8 +7,21 @@ import {
 
 class RestaurantService {
   async createRestaurant(input: CreateRestaurantInput) {
-    return RestaurantModel.create(input);
+    try {
+      const restaurant = await RestaurantModel.create(input);
+      const menu = await MenuModel.create({ categories: [] })
+      restaurant.menu = menu;
+      restaurant.save()
+
+      return restaurant;
+    }
+    catch (error) {
+      throw new ApolloError(
+        "Unable to create restaurant. Please try again later.",
+      );
+    }
   }
+
   async getRestaurants() {
     try {
       const restaurants = await RestaurantModel.find();

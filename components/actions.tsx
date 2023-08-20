@@ -13,8 +13,8 @@ import { ActionItem } from "../app/dashboard/menu/utils";
 
 const Actions = ({ actions }: { actions: ActionItem[] }) => {
   return (
-    <div className="relative h-full w-full">
-      <div className="absolute bottom-10 right-8">
+    <div className="absolute h-full w-full z-10">
+      <div className="fixed bottom-10 right-8">
         <SpeedDial>
           <SpeedDialHandler>
             <IconButton size="lg" className="rounded-full">

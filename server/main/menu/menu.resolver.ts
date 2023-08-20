@@ -1,5 +1,5 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateMenuInput, GetMenuInput, Menu } from "main/menu/menu.schema";
+import { Arg, Query, Resolver, Ctx, Authorized } from "type-graphql";
+import { GetMenuInput, Menu } from "main/menu/menu.schema";
 import MenuService from "main/menu/menu.service";
 
 @Resolver()
@@ -8,13 +8,9 @@ export default class MenuResolver {
     this.menuService = new MenuService();
   }
 
-  @Mutation(() => Menu)
-  createMenu(@Arg("input") input: CreateMenuInput) {
-    return this.menuService.createMenu(input);
-  }
-
   @Query(() => Menu)
-  menu(@Arg("id") input: GetMenuInput) {
-    return this.menuService.getMenu(input);
+  @Authorized()
+  menu(@Ctx() context: any) {
+    return this.menuService.getMenu(context.user);
   }
 }

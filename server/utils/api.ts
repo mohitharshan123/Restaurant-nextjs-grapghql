@@ -10,6 +10,8 @@ export const {
   login,
   currentUser,
   myRestaurant,
-  createCategory
+  createCategory,
+  getMenu,
+  createMenuItem
 } = getSdk(gqlClient);
 
