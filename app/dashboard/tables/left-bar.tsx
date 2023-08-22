@@ -61,7 +61,7 @@ const LeftBar: React.FC<LeftBarProps> = (
                 )}</div>
         </List>
         <Button disabled={isUpdatingFloorPlan} className="rounded-xl" onClick={() => updateFloorPlan({ newFloorPlan: tablePositions })}>Update floor plan</Button>
-        <Button disabled={isUpdatingFloorPlan} className="rounded-xl" onClick={() => setIsQRDrawerOpen(true)}>Print QR Scanner</Button>
+        <Button className="rounded-xl" onClick={() => setIsQRDrawerOpen(true)}>Print QR Scanner</Button>
     </Card>
 
 
