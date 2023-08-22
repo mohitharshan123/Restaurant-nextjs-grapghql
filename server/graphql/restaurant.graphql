@@ -4,11 +4,18 @@ query getRestaurant($id: String!) {
     email
     contact
     location
+    floorPlan
   }
 }
 
 query getRestaurants {
   restaurants {
     name
+  }
+}
+
+mutation updateFloorPlan($newFloorPlan: JSON!) {
+   updateFloorPlan(newFloorPlan: $newFloorPlan) {
+    floorPlan
   }
 }

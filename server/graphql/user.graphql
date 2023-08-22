@@ -25,5 +25,6 @@ query myRestaurant {
     name
     location
     contact
+    floorPlan
   }
 }

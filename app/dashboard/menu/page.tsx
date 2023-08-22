@@ -64,7 +64,7 @@ const Menu: React.FC = () => {
                       <Typography variant="h5" color="blue-gray" className="mb-2">
                         {item.name}
                       </Typography>
-                      <Typography variant="small" className="overflow-scroll">{item.description}</Typography>
+                      <Typography variant="small" className="overflow-scroll text-xs">{item.description}</Typography>
                     </CardBody>
                   </Card>
                 </div>

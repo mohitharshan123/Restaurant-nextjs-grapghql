@@ -22,7 +22,6 @@ class CategoryService {
             await restaurant.save();
             return category
         } catch (error) {
-            console.log(error)
             throw new ApolloError(
                 "Unable to create category. Please try again later.",
             );

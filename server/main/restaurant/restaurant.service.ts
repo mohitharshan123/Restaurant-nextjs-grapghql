@@ -60,6 +60,23 @@ class RestaurantService {
       throw new ApolloError(error);
     }
   }
+
+  async updateFloorPlan(userID: string, newFloorPlan: Record<string, number[]>) {
+    try {
+      const restaurant = await RestaurantModel.findOneAndUpdate(
+        { userID },
+        { floorPlan: newFloorPlan },
+        { new: true }
+      );
+
+      if (!restaurant) {
+        throw new ApolloError('Restaurant not found');
+      }
+      return restaurant;
+    } catch (error) {
+      throw new ApolloError(error);
+    }
+  }
 }
 
 export default RestaurantService;

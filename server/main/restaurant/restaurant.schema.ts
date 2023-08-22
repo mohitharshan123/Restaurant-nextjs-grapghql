@@ -7,6 +7,7 @@ import {
 } from "@typegoose/typegoose";
 import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import { Field, InputType, ObjectType } from "type-graphql";
+import GraphQLJSON from 'graphql-type-json';
 
 import { Menu } from "../menu/menu.schema";
 
@@ -50,6 +51,10 @@ export class Restaurant {
   @Field({ nullable: true })
   @prop({ required: false })
   userId: string;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  @prop({ type: Object, required: false })
+  floorPlan?: Record<string, number[]>;
 }
 
 export const RestaurantModel = getModelForClass<

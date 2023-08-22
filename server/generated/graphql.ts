@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSON: any;
 };
 
 export type Category = {
@@ -80,6 +81,7 @@ export type Mutation = {
   createRestaurant: Restaurant;
   createUser: CreateUserMutationResponse;
   login: Scalars['String'];
+  updateFloorPlan: Restaurant;
 };
 
 
@@ -107,6 +109,11 @@ export type MutationLoginArgs = {
   input: LoginInput;
 };
 
+
+export type MutationUpdateFloorPlanArgs = {
+  newFloorPlan: Scalars['JSON'];
+};
+
 export type Query = {
   __typename?: 'Query';
   category: Category;
@@ -132,6 +139,7 @@ export type Restaurant = {
   _id: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  floorPlan?: Maybe<Scalars['JSON']>;
   location?: Maybe<Scalars['String']>;
   menu?: Maybe<Menu>;
   name: Scalars['String'];
@@ -168,12 +176,19 @@ export type GetRestaurantQueryVariables = Exact<{
 }>;
 
 
-export type GetRestaurantQuery = { __typename?: 'Query', restaurant?: { __typename?: 'Restaurant', name: string, email?: string | null, contact?: string | null, location?: string | null } | null };
+export type GetRestaurantQuery = { __typename?: 'Query', restaurant?: { __typename?: 'Restaurant', name: string, email?: string | null, contact?: string | null, location?: string | null, floorPlan?: any | null } | null };
 
 export type GetRestaurantsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetRestaurantsQuery = { __typename?: 'Query', restaurants: Array<{ __typename?: 'Restaurant', name: string }> };
+
+export type UpdateFloorPlanMutationVariables = Exact<{
+  newFloorPlan: Scalars['JSON'];
+}>;
+
+
+export type UpdateFloorPlanMutation = { __typename?: 'Mutation', updateFloorPlan: { __typename?: 'Restaurant', floorPlan?: any | null } };
 
 export type CreateUserMutationVariables = Exact<{
   input: CreateUserInput;
@@ -197,7 +212,7 @@ export type CurrentUserQuery = { __typename?: 'Query', me?: { __typename?: 'User
 export type MyRestaurantQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant?: { __typename?: 'Restaurant', name: string, location?: string | null, contact?: string | null } | null };
+export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant?: { __typename?: 'Restaurant', name: string, location?: string | null, contact?: string | null, floorPlan?: any | null } | null };
 
 
 export const CreateCategoryDocument = gql`
@@ -242,6 +257,7 @@ export const GetRestaurantDocument = gql`
     email
     contact
     location
+    floorPlan
   }
 }
     `;
@@ -249,6 +265,13 @@ export const GetRestaurantsDocument = gql`
     query getRestaurants {
   restaurants {
     name
+  }
+}
+    `;
+export const UpdateFloorPlanDocument = gql`
+    mutation updateFloorPlan($newFloorPlan: JSON!) {
+  updateFloorPlan(newFloorPlan: $newFloorPlan) {
+    floorPlan
   }
 }
     `;
@@ -283,6 +306,7 @@ export const MyRestaurantDocument = gql`
     name
     location
     contact
+    floorPlan
   }
 }
     `;
@@ -308,6 +332,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getRestaurants(variables?: GetRestaurantsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantsQuery>(GetRestaurantsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurants', 'query');
+    },
+    updateFloorPlan(variables: UpdateFloorPlanMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateFloorPlanMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateFloorPlanMutation>(UpdateFloorPlanDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateFloorPlan', 'mutation');
     },
     createUser(variables: CreateUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createUser', 'mutation');

@@ -1,10 +1,10 @@
 import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
 import {
   CreateRestaurantInput,
-  GetRestaurantInput,
   Restaurant,
 } from "main/restaurant/restaurant.schema";
 import RestaurantService from "main/restaurant/restaurant.service";
+import GraphQLJSON from "graphql-type-json";
 
 @Resolver()
 export default class RestaurantResolver {
@@ -28,5 +28,11 @@ export default class RestaurantResolver {
   @Authorized()
   restaurants() {
     return this.restaurantService.getRestaurants();
+  }
+
+  @Mutation(() => Restaurant)
+  @Authorized()
+  updateFloorPlan(@Arg("newFloorPlan", () => GraphQLJSON) newFloorPlan: Record<string, number[]>, @Ctx() context: any) {
+    return this.restaurantService.updateFloorPlan(context.user.id, newFloorPlan);
   }
 }
