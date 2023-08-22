@@ -11,13 +11,14 @@ type LeftBarProps = {
     setSelectedFloor: React.Dispatch<React.SetStateAction<number>>,
     updateFloorPlan: ({ newFloorPlan }: { newFloorPlan: { [key: string]: Number[] } }) => void,
     isUpdatingFloorPlan: boolean,
-    tablePositions: { [key: string]: Number[] }
+    tablePositions: { [key: string]: Number[] },
+    setIsQRDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const LeftBar: React.FC<LeftBarProps> = (
     { noOfFloors, setNoOfFloors, tableCount, setTableCount,
         selectedFloor, setSelectedFloor, updateFloorPlan,
-        isUpdatingFloorPlan, tablePositions }
+        isUpdatingFloorPlan, tablePositions, setIsQRDrawerOpen }
 ) =>
     <Card className="w-full max-w-[20rem] h-full space-y-2 p-2 shadow-xl shadow-blue-gray-900/5">
         <Select
@@ -60,6 +61,7 @@ const LeftBar: React.FC<LeftBarProps> = (
                 )}</div>
         </List>
         <Button disabled={isUpdatingFloorPlan} className="rounded-xl" onClick={() => updateFloorPlan({ newFloorPlan: tablePositions })}>Update floor plan</Button>
+        <Button disabled={isUpdatingFloorPlan} className="rounded-xl" onClick={() => setIsQRDrawerOpen(true)}>Print QR Scanner</Button>
     </Card>
 
 
