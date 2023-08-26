@@ -14,4 +14,9 @@ export const SIDEBAR_LINKS: Array<Link> = [
     path: routes.dashboard.feedbacks,
     targetSegment: "feedbacks",
   },
+  {
+    label: "Settings",
+    path: routes.dashboard.settings,
+    targetSegment: "settings",
+  },
 ];

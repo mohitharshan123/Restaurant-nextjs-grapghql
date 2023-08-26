@@ -1,7 +1,7 @@
 "use client";
 
 import { Accordion, AccordionBody, AccordionHeader, Badge, Card, CardBody, CardFooter, CardHeader, IconButton, iconButton, Step, Stepper, Typography } from "@material-tailwind/react";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { UseQueryResult } from "react-query";
 import Image from "next/image"
 import { useParams } from "next/navigation";
@@ -10,6 +10,7 @@ import { CreditCardIcon, ShoppingCartIcon, PlusIcon, MinusIcon } from "@heroicon
 
 import { useGetRestaurantMenu } from "../../../hooks/api/useRestaurantApi";
 import { Category } from "../../../dashboard/menu/page";
+import Cart from "./cart";
 
 enum STEPS {
     "order" = 0,
@@ -49,7 +50,7 @@ const OrderMenu = () => {
     const totalOrdersCount = Object.values(orders).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     return <div className="p-4"><Stepper
-        className="fixed z-10 right-4 left-4 w-3/2 top-4"
+        className="fixed z-10 right-4 left-4 w-3/2"
         activeStep={activeStep}
 
     >
@@ -93,7 +94,7 @@ const OrderMenu = () => {
                 </AccordionBody>
             </Accordion>
         ))}
-    </div> : null}
+    </div> : <Cart {...{ orders }} />}
     </div>
 }
 
