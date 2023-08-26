@@ -39,6 +39,7 @@ const OrderMenu = () => {
     const handleRemoveItemFromCart = (item: string) => {
         let cartItems = { ...orders };
         if (item in orders) {
+            if (cartItems[item] === 0) return;
             cartItems[item] -= 1;
         } else { delete cartItems[item] }
 
