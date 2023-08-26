@@ -3,7 +3,7 @@ import { prop } from "ramda";
 
 import { queryClient, QUERY_KEYS } from "../../queryClient";
 
-import { getMenu, myRestaurant, updateFloorPlan } from "../../../server/utils/api";
+import { getMenu, getRestaurantMenu, myRestaurant, updateFloorPlan } from "../../../server/utils/api";
 import { Exact } from "generated/graphql";
 
 
@@ -15,6 +15,12 @@ export const useMyRestaurant = () =>
 export const useGetMenu = () => useQuery([QUERY_KEYS.menu], () => getMenu(), {
   select: prop("menu"),
 });
+
+export const useGetRestaurantMenu = (restaurantName: string) =>
+  useQuery([QUERY_KEYS.restaurantMenu, restaurantName],
+    () => getRestaurantMenu({ restaurantName }), {
+    select: prop("getRestaurantMenu"),
+  });
 
 export const useUpdateFloorPlan = () =>
   useMutation((newFloorPlan: Exact<{ newFloorPlan: any; }>) => updateFloorPlan(newFloorPlan),

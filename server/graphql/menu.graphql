@@ -21,6 +21,22 @@ query getMenu {
   }
 }
 
+query getRestaurantMenu($restaurantName: String!) {
+  getRestaurantMenu(restaurantName: $restaurantName) {
+   categories {
+     _id
+    name
+    description
+    items {
+      name
+      description
+      price
+      imageID
+    }
+   }
+  }
+}
+
 mutation createMenuItem($input: CreateMenuItemInput!) {
   createItem(input: $input) {
     name 
@@ -29,3 +45,5 @@ mutation createMenuItem($input: CreateMenuItemInput!) {
     imageID
   }
 }
+
+

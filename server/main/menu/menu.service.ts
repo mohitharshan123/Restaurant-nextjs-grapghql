@@ -18,6 +18,21 @@ class MenuService {
       throw new ApolloError("Unable to get menu. Please try again later.");
     }
   }
+
+  async getRestaurantMenu(restaurantName: any): Promise<Menu | undefined> {
+    try {
+      const restaurant = await RestaurantModel.findOne({ name: restaurantName });
+
+      if (!restaurant) {
+        throw new ApolloError("Restaurant not found");
+      }
+
+      const menu = restaurant.menu;
+      return menu;
+    } catch (error) {
+      throw new ApolloError("Unable to get menu. Please try again later.");
+    }
+  }
 }
 
 export default MenuService;

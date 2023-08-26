@@ -117,6 +117,7 @@ export type MutationUpdateFloorPlanArgs = {
 export type Query = {
   __typename?: 'Query';
   category: Category;
+  getRestaurantMenu: Menu;
   me?: Maybe<User>;
   menu: Menu;
   myRestaurant?: Maybe<Restaurant>;
@@ -127,6 +128,11 @@ export type Query = {
 
 export type QueryCategoryArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetRestaurantMenuArgs = {
+  restaurantName: Scalars['String'];
 };
 
 
@@ -163,6 +169,13 @@ export type GetMenuQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMenuQuery = { __typename?: 'Query', menu: { __typename?: 'Menu', categories: Array<{ __typename?: 'Category', _id: string, name: string, description: string, items: Array<{ __typename?: 'MenuItem', name: string, description: string, price: string, imageID: string }> }> } };
+
+export type GetRestaurantMenuQueryVariables = Exact<{
+  restaurantName: Scalars['String'];
+}>;
+
+
+export type GetRestaurantMenuQuery = { __typename?: 'Query', getRestaurantMenu: { __typename?: 'Menu', categories: Array<{ __typename?: 'Category', _id: string, name: string, description: string, items: Array<{ __typename?: 'MenuItem', name: string, description: string, price: string, imageID: string }> }> } };
 
 export type CreateMenuItemMutationVariables = Exact<{
   input: CreateMenuItemInput;
@@ -226,6 +239,23 @@ export const CreateCategoryDocument = gql`
 export const GetMenuDocument = gql`
     query getMenu {
   menu {
+    categories {
+      _id
+      name
+      description
+      items {
+        name
+        description
+        price
+        imageID
+      }
+    }
+  }
+}
+    `;
+export const GetRestaurantMenuDocument = gql`
+    query getRestaurantMenu($restaurantName: String!) {
+  getRestaurantMenu(restaurantName: $restaurantName) {
     categories {
       _id
       name
@@ -323,6 +353,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getMenu(variables?: GetMenuQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetMenuQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMenuQuery>(GetMenuDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMenu', 'query');
+    },
+    getRestaurantMenu(variables: GetRestaurantMenuQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantMenuQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantMenuQuery>(GetRestaurantMenuDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurantMenu', 'query');
     },
     createMenuItem(variables: CreateMenuItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateMenuItemMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMenuItemMutation>(CreateMenuItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createMenuItem', 'mutation');

@@ -1,6 +1,7 @@
 import { Arg, Query, Resolver, Ctx, Authorized } from "type-graphql";
 import { GetMenuInput, Menu } from "main/menu/menu.schema";
 import MenuService from "main/menu/menu.service";
+import { MenuItemModel } from "main/menu-item/menu-item.schema";
 
 @Resolver()
 export default class MenuResolver {
@@ -12,5 +13,10 @@ export default class MenuResolver {
   @Authorized()
   menu(@Ctx() context: any) {
     return this.menuService.getMenu(context.user);
+  }
+
+  @Query(() => Menu)
+  getRestaurantMenu(@Arg("restaurantName") restaurantName: string) {
+    return this.menuService.getRestaurantMenu(restaurantName);
   }
 }
