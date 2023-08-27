@@ -17,5 +17,6 @@ export const QUERY_KEYS = {
     currentUser: "current-user",
     myRestaurant: "my-restaurant",
     menu: "menu",
-    restaurantMenu: "restaurant-menu"
+    restaurantMenu: "restaurant-menu",
+    settings: "settings"
 };

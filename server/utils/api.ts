@@ -14,6 +14,8 @@ export const {
   getMenu,
   createMenuItem,
   updateFloorPlan,
-  getRestaurantMenu
+  getRestaurantMenu,
+  updateSettings,
+  getSettings,
 } = getSdk(gqlClient);
 

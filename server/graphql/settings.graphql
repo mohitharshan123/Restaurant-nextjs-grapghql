@@ -1,0 +1,13 @@
+mutation updateSettings($input: UpdateSettingsInput!) {
+  updateSettings(input: $input) {
+    paymentApiKey
+    paymentApiSecret
+  }
+}
+
+query getSettings {
+  settings {
+    paymentApiKey
+    paymentApiSecret
+  }
+}

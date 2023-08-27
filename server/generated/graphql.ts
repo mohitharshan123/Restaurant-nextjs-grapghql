@@ -82,6 +82,7 @@ export type Mutation = {
   createUser: CreateUserMutationResponse;
   login: Scalars['String'];
   updateFloorPlan: Restaurant;
+  updateSettings: Settings;
 };
 
 
@@ -114,6 +115,11 @@ export type MutationUpdateFloorPlanArgs = {
   newFloorPlan: Scalars['JSON'];
 };
 
+
+export type MutationUpdateSettingsArgs = {
+  input: UpdateSettingsInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   category: Category;
@@ -123,6 +129,7 @@ export type Query = {
   myRestaurant?: Maybe<Restaurant>;
   restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
+  settings?: Maybe<Settings>;
 };
 
 
@@ -149,7 +156,19 @@ export type Restaurant = {
   location?: Maybe<Scalars['String']>;
   menu?: Maybe<Menu>;
   name: Scalars['String'];
+  settings: Settings;
   userId?: Maybe<Scalars['String']>;
+};
+
+export type Settings = {
+  __typename?: 'Settings';
+  paymentApiKey: Scalars['String'];
+  paymentApiSecret: Scalars['String'];
+};
+
+export type UpdateSettingsInput = {
+  paymentApiKey: Scalars['String'];
+  paymentApiSecret: Scalars['String'];
 };
 
 export type User = {
@@ -202,6 +221,18 @@ export type UpdateFloorPlanMutationVariables = Exact<{
 
 
 export type UpdateFloorPlanMutation = { __typename?: 'Mutation', updateFloorPlan: { __typename?: 'Restaurant', floorPlan?: any | null } };
+
+export type UpdateSettingsMutationVariables = Exact<{
+  input: UpdateSettingsInput;
+}>;
+
+
+export type UpdateSettingsMutation = { __typename?: 'Mutation', updateSettings: { __typename?: 'Settings', paymentApiKey: string, paymentApiSecret: string } };
+
+export type GetSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSettingsQuery = { __typename?: 'Query', settings?: { __typename?: 'Settings', paymentApiKey: string, paymentApiSecret: string } | null };
 
 export type CreateUserMutationVariables = Exact<{
   input: CreateUserInput;
@@ -305,6 +336,22 @@ export const UpdateFloorPlanDocument = gql`
   }
 }
     `;
+export const UpdateSettingsDocument = gql`
+    mutation updateSettings($input: UpdateSettingsInput!) {
+  updateSettings(input: $input) {
+    paymentApiKey
+    paymentApiSecret
+  }
+}
+    `;
+export const GetSettingsDocument = gql`
+    query getSettings {
+  settings {
+    paymentApiKey
+    paymentApiSecret
+  }
+}
+    `;
 export const CreateUserDocument = gql`
     mutation createUser($input: CreateUserInput!) {
   createUser(input: $input) {
@@ -368,6 +415,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateFloorPlan(variables: UpdateFloorPlanMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateFloorPlanMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateFloorPlanMutation>(UpdateFloorPlanDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateFloorPlan', 'mutation');
+    },
+    updateSettings(variables: UpdateSettingsMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateSettingsMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateSettingsMutation>(UpdateSettingsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateSettings', 'mutation');
+    },
+    getSettings(variables?: GetSettingsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetSettingsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSettingsQuery>(GetSettingsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSettings', 'query');
     },
     createUser(variables: CreateUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createUser', 'mutation');

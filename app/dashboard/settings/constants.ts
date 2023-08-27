@@ -23,21 +23,4 @@ export const SETTINGS_CATEGORIES: { [key: string]: SettingCategory } = {
         link: routes.dashboard.settings.payment,
         icon: CurrencyDollarIcon
     },
-    "payment34": {
-        label: "Payment Integration",
-        description: "Update payment integration info.",
-        link: routes.dashboard.settings.payment,
-        icon: CurrencyDollarIcon
-    },
-    "payment5": {
-        label: "Payment Integration",
-        description: "Update payment integration info.",
-        link: routes.dashboard.settings.payment,
-        icon: CurrencyDollarIcon
-    }, "payment7": {
-        label: "Payment Integration",
-        description: "Update payment integration info.",
-        link: routes.dashboard.settings.payment,
-        icon: CurrencyDollarIcon
-    }
 }

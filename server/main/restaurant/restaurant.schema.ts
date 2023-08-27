@@ -10,6 +10,7 @@ import { Field, InputType, ObjectType } from "type-graphql";
 import GraphQLJSON from 'graphql-type-json';
 
 import { Menu } from "../menu/menu.schema";
+import { Settings } from "main/settings/settings.schema";
 
 function findByName(
   this: ReturnModelType<typeof Restaurant, QueryHelpers>,
@@ -55,6 +56,10 @@ export class Restaurant {
   @Field(() => GraphQLJSON, { nullable: true })
   @prop({ type: Object, required: false })
   floorPlan?: Record<string, number[]>;
+
+  @Field()
+  @prop({ required: false })
+  settings: Settings;
 }
 
 export const RestaurantModel = getModelForClass<
