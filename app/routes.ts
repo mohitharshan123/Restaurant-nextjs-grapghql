@@ -3,7 +3,11 @@ export default {
     menu: "/dashboard/menu",
     feedbacks: "/dashboard/feedbacks",
     tables: "/dashboard/tables",
-    settings: "/dashboard/settings",
+    settings: {
+      index: "/dashboard/settings",
+      general: "/dashboard/settings/general",
+      payment: "/dashboard/settings/payment"
+    },
   },
   authentication: "/authentication",
 };
