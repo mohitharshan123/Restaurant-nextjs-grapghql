@@ -33,7 +33,7 @@ const QRDrawer: React.FC<QRDrawerProps> = ({ isQRDrawerOpen, setIsQRDrawerOpen, 
         });
     }
 
-    return <Drawer placement="right" open={isQRDrawerOpen} onClose={() => setIsQRDrawerOpen(false)} overlay={false} className="overflow-auto p-4 items-center flex flex-col space-y-10">
+    return <Drawer size={400} placement="right" open={isQRDrawerOpen} onClose={() => setIsQRDrawerOpen(false)} overlay={false} className="overflow-auto p-4 items-center flex flex-col space-y-10">
         {tablePositions[selectedFloor]?.map((tableNumber: any) => (<div className="flex items-center flex-col">
             <div className="flex items-center flex-col p-10 bg-amber-200 rounded-xl m-2" id={`qr-print-${tableNumber}`}>
                 <Typography variant="h3">{restaurant?.name}</Typography>
