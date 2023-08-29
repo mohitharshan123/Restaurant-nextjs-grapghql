@@ -1,9 +1,9 @@
 import { ApolloError } from "apollo-server-errors";
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
-import { OrderModel } from "./order.schema";
+import { CreateOrderInput, OrderModel } from "./order.schema";
 
 class OrderService {
-    async createOrder(input: any) {
+    async createOrder(input: CreateOrderInput) {
         try {
             const restaurant = await RestaurantModel.findOne({ name: input.restaurantName })
             if (!restaurant) {
@@ -11,7 +11,7 @@ class OrderService {
                     "There are no restaurants associated with this name.",
                 );
             }
-            const newOrder = await restaurant.orders.create({ ...input })
+            const newOrder = await OrderModel.create({ restaurant, table: input.table, items: input.items, status: input.status })
             return newOrder;
         } catch (error) {
             throw new ApolloError(
@@ -22,7 +22,7 @@ class OrderService {
     }
     async getRestaurantOrders(restaurantName: String) {
         try {
-            const orders = OrderModel.findByRestaurant(restaurantName)
+            const orders = OrderModel.find({ "restaurant.name": restaurantName })
             return orders;
         } catch (error) {
             throw new ApolloError(

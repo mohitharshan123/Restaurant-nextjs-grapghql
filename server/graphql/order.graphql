@@ -1,0 +1,20 @@
+mutation createOrder($input: CreateOrderInput!){
+  createOrder(input: $input) {
+    table
+    items{
+      name
+      quantity
+    }
+  }
+}
+
+query getRestaurantOrders($restaurantName: String!){
+  getRestaurantOrders(restaurantName: $restaurantName) {
+    table
+    status
+    items{
+      name
+      quantity
+    }
+  }
+}

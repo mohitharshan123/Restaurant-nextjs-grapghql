@@ -10,19 +10,18 @@ import { Field, InputType, ObjectType } from "type-graphql";
 import GraphQLJSON from 'graphql-type-json';
 import { Restaurant } from "main/restaurant/restaurant.schema";
 
+@ObjectType()
+export class OrderItem {
+    @Field(() => String)
+    id: string;
 
-function findByRestaurant(
-    this: ReturnModelType<typeof Order, QueryHelpers>,
-    restaurantName: string,
-) {
-    return this.find({ "restaurant.name": restaurantName });
+    @Field(() => String)
+    name?: string;
+
+    @Field(() => Number)
+    quantity: string;
 }
 
-interface QueryHelpers {
-    findByRestaurant: AsQueryMethod<typeof findByRestaurant>;
-}
-
-@queryMethod(findByRestaurant)
 @ObjectType()
 export class Order {
     @Field()
@@ -33,14 +32,15 @@ export class Order {
     @prop({ required: true })
     table: string;
 
-    @Field(() => GraphQLJSON, { nullable: true })
+    @Field(() => [OrderItem], { nullable: true })
     @prop({ type: Object, required: false })
-    items: Record<string, number>;
+    items: OrderItem[];
 
     @Field(() => String)
     @prop({ required: true })
     status: "pending" | "delivered" | "cancelled";
 }
+
 
 
 @InputType()
@@ -52,10 +52,10 @@ export class CreateOrderInput {
     table: string;
 
     @Field(() => GraphQLJSON, { nullable: true })
-    items?: Record<string, number>;
+    items?: OrderItem[];
+
+    @Field(() => String)
+    status: "pending" | "delivered" | "cancelled";
 }
 
-export const OrderModel = mongoose.models.Order || getModelForClass<
-    typeof Order,
-    QueryHelpers
->(Order);
+export const OrderModel = mongoose.models.Order || getModelForClass(Order);
