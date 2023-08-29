@@ -12,6 +12,7 @@ query getMenu {
     name
     description
     items {
+      _id
       name
       description
       price
@@ -28,6 +29,7 @@ query getRestaurantMenu($restaurantName: String!) {
     name
     description
     items {
+      _id
       name
       description
       price
@@ -39,6 +41,7 @@ query getRestaurantMenu($restaurantName: String!) {
 
 mutation createMenuItem($input: CreateMenuItemInput!) {
   createItem(input: $input) {
+    _id
     name 
     description
     price

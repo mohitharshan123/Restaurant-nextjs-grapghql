@@ -12,7 +12,6 @@ import GraphQLJSON from 'graphql-type-json';
 
 import { Menu } from "../menu/menu.schema";
 import { Settings } from "main/settings/settings.schema";
-import { Order } from "main/order/order.schema";
 
 function findByName(
   this: ReturnModelType<typeof Restaurant, QueryHelpers>,

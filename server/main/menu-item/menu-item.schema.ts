@@ -4,6 +4,9 @@ import { ObjectType, Field, InputType } from "type-graphql";
 @ObjectType()
 export class MenuItem {
   @Field(() => String)
+  _id: string;
+
+  @Field(() => String)
   @prop({ required: true })
   name: string;
 

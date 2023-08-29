@@ -2,16 +2,17 @@
 
 import { Button, Typography } from "@material-tailwind/react";
 import { useParams } from "next/navigation";
+import { OrderItem } from "./page";
 import { buildOrderItems, initializeRazorpay } from "./utils";
 
-const Cart: React.FC<{ orders: { [key: string]: number } }> = ({ orders }) => {
+const Cart: React.FC<{ orders: Array<OrderItem> }> = ({ orders }) => {
     const { name }: any = useParams()
 
     const makePayment = async () => {
         await initializeRazorpay();
         const data = await fetch("/api/razorpay", {
             method: "POST", body: JSON.stringify({
-                restaurantName: name, items: buildOrderItems(orders)
+                restaurantName: name, items: orders
             })
         }).then((t) =>
             t.json()
@@ -40,7 +41,7 @@ const Cart: React.FC<{ orders: { [key: string]: number } }> = ({ orders }) => {
     };
 
     return <div className="flex flex-col space-y-4 mt-20">
-        {Object.entries(orders).map(([item, count]) => <Typography variant="h4">{item} x {count}</Typography>)}
+        {orders.map(order => <Typography variant="h4">{order.name} x {order.quantity}</Typography>)}
         <Button onClick={makePayment}>Make payment</Button>
     </div>
 }

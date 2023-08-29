@@ -1,7 +1,8 @@
-import { MenuItemModel } from "main/menu-item/menu-item.schema";
+import { MenuItem, MenuItemModel } from "main/menu-item/menu-item.schema";
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
 import Razorpay from "razorpay";
 import shortid from "shortid";
+import { OrderItem } from "../../app/[name]/table/[tableNumber]/page";
 
 export type PaymentResponse = {
     id: string;
@@ -11,7 +12,7 @@ export type PaymentResponse = {
 };
 
 export default class PaymentHelper {
-    constructor(private restaurantName: string, private items: Array<{ name: string; quantity: number }>) {
+    constructor(private restaurantName: string, private items: Array<OrderItem>) {
         this.restaurantName = restaurantName;
         this.items = items;
     }
@@ -20,7 +21,6 @@ export default class PaymentHelper {
         const restaurant = await this.getRestaurant();
         const menuItems = await this.getMenuItems();
         const totalPrice = this.calculateTotalPrice(menuItems);
-
         const response = await this.createRazorpayOrder(restaurant.settings.paymentApiKey,
             restaurant.settings.paymentApiSecret, totalPrice);
 
@@ -41,13 +41,13 @@ export default class PaymentHelper {
     }
 
     private async getMenuItems() {
-        const menuItems = await MenuItemModel.find({ name: { $in: this.items.map(({ name }) => name) } });
+        const menuItems = await MenuItemModel.find({ _id: { $in: this.items.map(({ id }) => id) } });
         return menuItems;
     }
 
-    private calculateTotalPrice(menuItems: any[]) {
-        return this.items.reduce((total, { name, quantity }) => {
-            const menuItem = menuItems.find(item => item.name === name);
+    private calculateTotalPrice(menuItems: MenuItem[]) {
+        return this.items.reduce((total, { id, quantity }) => {
+            const menuItem = menuItems.find(item => item._id.toString() === id);
             if (menuItem) {
                 total += menuItem.price * quantity;
             }

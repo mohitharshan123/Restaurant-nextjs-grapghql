@@ -37,6 +37,12 @@ export type CreateMenuItemInput = {
   price: Scalars['String'];
 };
 
+export type CreateOrderInput = {
+  items?: InputMaybe<Scalars['JSON']>;
+  restaurantName: Scalars['String'];
+  table: Scalars['String'];
+};
+
 export type CreateRestaurantInput = {
   contact?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<Scalars['String']>;
@@ -68,6 +74,7 @@ export type Menu = {
 
 export type MenuItem = {
   __typename?: 'MenuItem';
+  _id: Scalars['String'];
   description: Scalars['String'];
   imageID: Scalars['String'];
   name: Scalars['String'];
@@ -78,6 +85,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCategory: Category;
   createItem: MenuItem;
+  createOrder: Order;
   createRestaurant: Restaurant;
   createUser: CreateUserMutationResponse;
   login: Scalars['String'];
@@ -93,6 +101,11 @@ export type MutationCreateCategoryArgs = {
 
 export type MutationCreateItemArgs = {
   input: CreateMenuItemInput;
+};
+
+
+export type MutationCreateOrderArgs = {
+  input: CreateOrderInput;
 };
 
 
@@ -120,10 +133,19 @@ export type MutationUpdateSettingsArgs = {
   input: UpdateSettingsInput;
 };
 
+export type Order = {
+  __typename?: 'Order';
+  items?: Maybe<Scalars['JSON']>;
+  restaurant: Restaurant;
+  status: Scalars['String'];
+  table: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   category: Category;
   getRestaurantMenu: Menu;
+  getRestaurantOrders: Array<Order>;
   me?: Maybe<User>;
   menu: Menu;
   myRestaurant?: Maybe<Restaurant>;
@@ -139,6 +161,11 @@ export type QueryCategoryArgs = {
 
 
 export type QueryGetRestaurantMenuArgs = {
+  restaurantName: Scalars['String'];
+};
+
+
+export type QueryGetRestaurantOrdersArgs = {
   restaurantName: Scalars['String'];
 };
 
@@ -187,21 +214,21 @@ export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: 
 export type GetMenuQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMenuQuery = { __typename?: 'Query', menu: { __typename?: 'Menu', categories: Array<{ __typename?: 'Category', _id: string, name: string, description: string, items: Array<{ __typename?: 'MenuItem', name: string, description: string, price: string, imageID: string }> }> } };
+export type GetMenuQuery = { __typename?: 'Query', menu: { __typename?: 'Menu', categories: Array<{ __typename?: 'Category', _id: string, name: string, description: string, items: Array<{ __typename?: 'MenuItem', _id: string, name: string, description: string, price: string, imageID: string }> }> } };
 
 export type GetRestaurantMenuQueryVariables = Exact<{
   restaurantName: Scalars['String'];
 }>;
 
 
-export type GetRestaurantMenuQuery = { __typename?: 'Query', getRestaurantMenu: { __typename?: 'Menu', categories: Array<{ __typename?: 'Category', _id: string, name: string, description: string, items: Array<{ __typename?: 'MenuItem', name: string, description: string, price: string, imageID: string }> }> } };
+export type GetRestaurantMenuQuery = { __typename?: 'Query', getRestaurantMenu: { __typename?: 'Menu', categories: Array<{ __typename?: 'Category', _id: string, name: string, description: string, items: Array<{ __typename?: 'MenuItem', _id: string, name: string, description: string, price: string, imageID: string }> }> } };
 
 export type CreateMenuItemMutationVariables = Exact<{
   input: CreateMenuItemInput;
 }>;
 
 
-export type CreateMenuItemMutation = { __typename?: 'Mutation', createItem: { __typename?: 'MenuItem', name: string, description: string, price: string, imageID: string } };
+export type CreateMenuItemMutation = { __typename?: 'Mutation', createItem: { __typename?: 'MenuItem', _id: string, name: string, description: string, price: string, imageID: string } };
 
 export type GetRestaurantQueryVariables = Exact<{
   id: Scalars['String'];
@@ -275,6 +302,7 @@ export const GetMenuDocument = gql`
       name
       description
       items {
+        _id
         name
         description
         price
@@ -292,6 +320,7 @@ export const GetRestaurantMenuDocument = gql`
       name
       description
       items {
+        _id
         name
         description
         price
@@ -304,6 +333,7 @@ export const GetRestaurantMenuDocument = gql`
 export const CreateMenuItemDocument = gql`
     mutation createMenuItem($input: CreateMenuItemInput!) {
   createItem(input: $input) {
+    _id
     name
     description
     price

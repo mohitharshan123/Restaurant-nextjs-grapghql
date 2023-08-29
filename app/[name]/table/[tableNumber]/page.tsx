@@ -11,11 +11,14 @@ import { CreditCardIcon, ShoppingCartIcon, PlusIcon, MinusIcon } from "@heroicon
 import { useGetRestaurantMenu } from "../../../hooks/api/useRestaurantApi";
 import { Category } from "../../../dashboard/menu/page";
 import Cart from "./cart";
+import { MenuItem } from "main/menu-item/menu-item.schema";
 
 enum STEPS {
     "order" = 0,
     "cart" = 1
 }
+
+export type OrderItem = { id: string, name: string, quantity: number }
 
 const OrderMenu = () => {
     const { name }: any = useParams()
@@ -24,30 +27,38 @@ const OrderMenu = () => {
     }>;
 
     const [activeStep, setActiveStep] = useState<0 | 1>(STEPS.order);
-    const [orders, setOrder] = useState<{ [key: string]: number }>({});
+    const [orders, setOrder] = useState<Array<OrderItem>>([]);
 
     if (!menu || isLoading) return null;
 
-    const handleAddItemToCart = (item: string) => {
-        let cartItems = { ...orders };
-        if (item in orders) {
-            cartItems[item] += 1;
-        } else { cartItems[item] = 1 }
+    const handleAddItemToCart = (item: MenuItem) => {
+        console.log({ item })
+        const updatedOrders = [...orders];
+        const itemIndex = updatedOrders.findIndex(orderItem => orderItem.id === item._id);
 
-        setOrder(cartItems)
+        if (itemIndex !== -1) {
+            updatedOrders[itemIndex].quantity += 1;
+        } else {
+            updatedOrders.push({ id: item._id, name: item.name, quantity: 1 });
+        }
+        setOrder(updatedOrders);
     }
 
-    const handleRemoveItemFromCart = (item: string) => {
-        let cartItems = { ...orders };
-        if (item in orders) {
-            if (cartItems[item] === 0) return;
-            cartItems[item] -= 1;
-        } else { delete cartItems[item] }
+    const handleRemoveItemFromCart = (itemId: string) => {
+        const updatedOrders = [...orders];
+        const itemIndex = updatedOrders.findIndex(item => item.id === itemId);
+        if (itemIndex === -1) return
+        if (updatedOrders[itemIndex].quantity > 0) {
+            updatedOrders[itemIndex].quantity -= 1;
 
-        setOrder(cartItems)
+        } else {
+            updatedOrders.splice(itemIndex, 1);
+
+        }
+        setOrder(updatedOrders);
     }
 
-    const totalOrdersCount = Object.values(orders).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    const totalOrdersCount = orders.reduce((accumulator, currentValue) => accumulator + currentValue.quantity, 0);
 
     return <div className="p-4"><Stepper
         className="fixed z-10 right-4 left-4 w-3/2"
@@ -83,9 +94,9 @@ const OrderMenu = () => {
                                         <Typography variant="small" className="overflow-scroll text-xs">{item.description}</Typography>
                                     </CardBody>
                                     <CardFooter className="pt-0 flex w-full justify-between">
-                                        <IconButton className="rounded-full" onClick={() => handleRemoveItemFromCart(item.name)}><MinusIcon className="w-4" /></IconButton>
-                                        <Typography variant="h4">{orders[item.name]}</Typography>
-                                        <IconButton className="rounded-full" onClick={() => handleAddItemToCart(item.name)}><PlusIcon className="w-4" /></IconButton>
+                                        <IconButton className="rounded-full" onClick={() => handleRemoveItemFromCart(item._id)}><MinusIcon className="w-4" /></IconButton>
+                                        <Typography variant="h4">{orders.find(({ id }) => id === item._id)?.quantity}</Typography>
+                                        <IconButton className="rounded-full" onClick={() => handleAddItemToCart(item)}><PlusIcon className="w-4" /></IconButton>
                                     </CardFooter>
                                 </Card>
                             </div>

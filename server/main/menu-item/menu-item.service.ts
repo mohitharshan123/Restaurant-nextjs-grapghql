@@ -1,5 +1,6 @@
 import { ApolloError } from "apollo-server-errors";
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
+import mongoose from "mongoose";
 import { CreateMenuItemInput, MenuItemModel } from "./menu-item.schema";
 
 class MenuItemService {
@@ -17,7 +18,7 @@ class MenuItemService {
                     "Category not found.",
                 );
             }
-            const item = await MenuItemModel.create(input);
+            const item = await MenuItemModel.create({ ...input, _id: new mongoose.Types.ObjectId() });
             await RestaurantModel.findOneAndUpdate(
                 { userId: user.id, "menu.categories._id": category._id },
                 { $push: { "menu.categories.$.items": item } }
