@@ -27,7 +27,7 @@ interface QueryHelpers {
 export class Order {
     @Field(() => Restaurant)
     @prop({ required: false })
-    restaurant: Restaurant;
+    restaurant?: Restaurant;
 
     @Field({ nullable: true })
     @prop({ required: false })

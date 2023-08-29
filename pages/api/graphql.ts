@@ -10,7 +10,6 @@ import jwt from "jsonwebtoken";
 
 import { customAuthChecker } from "../../server/utils/auth";
 import { resolvers } from "../../server/resolvers";
-console.log("TUNNGON")
 
 class App {
   public server: ApolloServer;

@@ -22,7 +22,7 @@ class OrderService {
     }
     async getRestaurantOrders(restaurantName: string) {
         try {
-            const orders = await OrderModel.find({ "restaurant.name": restaurantName });
+            const orders = await OrderModel.findByRestaurant(restaurantName);
             return orders;
         } catch (error) {
             throw new ApolloError(

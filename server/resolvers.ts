@@ -7,11 +7,11 @@ import SettingsResolver from "main/settings/settings.resolver";
 import OrderResolver from "main/order/order.resolver";
 
 export const resolvers = [
-  OrderResolver,
   UserResolver,
   RestaurantResolver,
   MenuResolver,
   CategoryResolver,
   MenuItemResolver,
   SettingsResolver,
+  OrderResolver,
 ] as const;

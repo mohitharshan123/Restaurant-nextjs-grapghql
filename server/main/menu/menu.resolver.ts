@@ -1,7 +1,6 @@
 import { Arg, Query, Resolver, Ctx, Authorized } from "type-graphql";
-import { GetMenuInput, Menu } from "main/menu/menu.schema";
+import { Menu } from "main/menu/menu.schema";
 import MenuService from "main/menu/menu.service";
-import { MenuItemModel } from "main/menu-item/menu-item.schema";
 
 @Resolver()
 export default class MenuResolver {

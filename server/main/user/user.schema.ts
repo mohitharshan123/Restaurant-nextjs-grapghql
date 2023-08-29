@@ -8,6 +8,7 @@ import {
 } from "@typegoose/typegoose";
 import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 import { IsEmail, MaxLength, MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 
@@ -49,7 +50,7 @@ export class User {
   password: string;
 }
 
-export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
+export const UserModel = mongoose.models.User || getModelForClass<typeof User, QueryHelpers>(User);
 
 @InputType()
 export class CreateUserInput {
