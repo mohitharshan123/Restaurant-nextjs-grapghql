@@ -18,13 +18,20 @@ const Cart: React.FC<{ orders: { [key: string]: number } }> = ({ orders }) => {
         );
 
         var options = {
-            key: data.apiKey, 
+            key: data.apiKey,
             name,
             currency: data.currency,
             amount: data.amount,
             order_id: data.id,
             description: "Enjoy your meal!",
             image: "https://manuarora.in/logo.png",
+            handler: function (response: any) {
+                if (typeof response.razorpay_payment_id == 'undefined' || response.razorpay_payment_id < 1) {
+                    // Error
+                } else {
+                    //Create order for restaurant
+                }
+            },
         };
 
         const paymentObject = new window.Razorpay(options);
