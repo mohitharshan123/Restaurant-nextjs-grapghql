@@ -38,7 +38,7 @@ export class Order {
     items?: Record<string, number>[];
 }
 
-export const OrderModel = getModelForClass<
+export const OrderModel = mongoose.models.Order || getModelForClass<
     typeof Order,
     QueryHelpers
 >(Order);
