@@ -4,6 +4,7 @@ import {
   ReturnModelType,
   queryMethod,
   index,
+  mongoose,
 } from "@typegoose/typegoose";
 import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import { Field, InputType, ObjectType } from "type-graphql";
@@ -62,7 +63,7 @@ export class Restaurant {
   settings: Settings;
 }
 
-export const RestaurantModel = getModelForClass<
+export const RestaurantModel = mongoose.models.Restaurant || getModelForClass<
   typeof Restaurant,
   QueryHelpers
 >(Restaurant);

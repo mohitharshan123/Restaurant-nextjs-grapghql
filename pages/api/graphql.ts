@@ -74,6 +74,7 @@ export const config = {
     bodyParser: false,
   },
 };
+
 const app = new App();
 const connection = await app.connectServer();
 const server = app.server;

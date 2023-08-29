@@ -10,11 +10,12 @@ class SettingsService {
             const restaurant = await RestaurantModel.findOne({
                 userID,
             });
+
+            console.log({ restaurant })
             if (!restaurant) {
                 throw new ApolloError("Restaurant not found");
             }
             const updatedSettings = {
-                ...JSON.parse(JSON.stringify(restaurant.settings)),
                 paymentApiKey: input.paymentApiKey,
                 paymentApiSecret: input.paymentApiSecret
             };

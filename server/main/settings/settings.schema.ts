@@ -1,5 +1,6 @@
 import {
     getModelForClass,
+    mongoose,
     prop,
 } from "@typegoose/typegoose";
 import { Field, InputType, ObjectType } from "type-graphql";
@@ -8,14 +9,14 @@ import { Field, InputType, ObjectType } from "type-graphql";
 export class Settings {
     @Field(() => String)
     @prop({ required: true })
-    paymentApiKey: string;
+    paymentApiKey?: string;
 
     @Field()
     @prop({ required: false })
     paymentApiSecret?: string;
 }
 
-export const SettingsModel = getModelForClass<typeof Settings>(Settings);
+export const SettingsModel = mongoose.models.Settings || getModelForClass<typeof Settings>(Settings);
 
 
 @InputType()

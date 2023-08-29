@@ -1,6 +1,6 @@
 import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
 import CategoryService from "./category.service";
-import { Category, CreateCategoryInput, GetCategoryInput } from "./category.schema";
+import { Category, CreateCategoryInput } from "./category.schema";
 
 @Resolver()
 export default class CategoryResolver {

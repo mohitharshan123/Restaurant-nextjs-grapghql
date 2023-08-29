@@ -1,36 +1,30 @@
 "use client"
 
 import { Button, Typography } from "@material-tailwind/react";
-import { initializeRazorpay } from "./utils";
+import { useParams } from "next/navigation";
+import { buildOrderItems, initializeRazorpay } from "./utils";
 
 const Cart: React.FC<{ orders: { [key: string]: number } }> = ({ orders }) => {
+    const { name }: any = useParams()
 
     const makePayment = async () => {
-        const res = await initializeRazorpay();
-
-        if (!res) {
-            alert("Razorpay SDK Failed to load");
-            return;
-        }
+        await initializeRazorpay();
+        const data = await fetch("/api/razorpay", {
+            method: "POST", body: JSON.stringify({
+                restaurantName: name, items: buildOrderItems(orders)
+            })
+        }).then((t) =>
+            t.json()
+        );
 
         var options = {
-            key: process.env.RAZORPAY_KEY, 
-            name: "Manu Arora Pvt Ltd",
-            currency: "INR",
-            amount: 299,
-            order_id: "order_12345",
-            description: "Thankyou for your test donation",
+            key: data.apiKey, 
+            name,
+            currency: data.currency,
+            amount: data.amount,
+            order_id: data.id,
+            description: "Enjoy your meal!",
             image: "https://manuarora.in/logo.png",
-            handler: function (response) {
-                alert(response.razorpay_payment_id);
-                alert(response.razorpay_order_id);
-                alert(response.razorpay_signature);
-            },
-            prefill: {
-                name: "Manu Arora",
-                email: "manuarorawork@gmail.com",
-                contact: "9999999999",
-            },
         };
 
         const paymentObject = new window.Razorpay(options);

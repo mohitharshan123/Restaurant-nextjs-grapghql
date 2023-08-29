@@ -1,4 +1,4 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { getModelForClass, mongoose, prop } from "@typegoose/typegoose";
 import { MenuItem } from "main/menu-item/menu-item.schema";
 import { ObjectType, Field, InputType, ID } from "type-graphql";
 
@@ -20,7 +20,7 @@ export class Category {
   items: MenuItem[]
 }
 
-export const CategoryModel = getModelForClass(Category);
+export const CategoryModel = mongoose.models.Category || getModelForClass(Category);
 
 @InputType()
 export class CreateCategoryInput {

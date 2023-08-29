@@ -13,3 +13,6 @@ export const initializeRazorpay = () => {
         document.body.appendChild(script);
     });
 };
+
+
+export const buildOrderItems = (orders: { [key: string]: number }) => Object.keys(orders).map(item => ({ name: item, quantity: orders[item] }))
