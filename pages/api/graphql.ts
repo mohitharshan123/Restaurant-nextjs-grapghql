@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-micro";
 import { buildSchema } from "type-graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+//@ts-ignore
 import HttpHeadersPlugin from "apollo-server-plugin-http-headers";
 import { MicroRequest } from "apollo-server-micro/dist/types";
 import mongoose from "mongoose";
@@ -9,11 +10,13 @@ import jwt from "jsonwebtoken";
 
 import { customAuthChecker } from "../../server/utils/auth";
 import { resolvers } from "../../server/resolvers";
+console.log("TUNNGON")
 
 class App {
   public server: ApolloServer;
 
   constructor() {
+    console.log("Working .....")
     this.connectToDatabase();
   }
 
@@ -28,6 +31,7 @@ class App {
   }
 
   async generateSchema() {
+    console.log("Trying to build schema...")
     const schema = await buildSchema({
       resolvers,
       authChecker: customAuthChecker,

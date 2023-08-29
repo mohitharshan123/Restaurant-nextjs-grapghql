@@ -11,6 +11,7 @@ import { Spinner } from "@material-tailwind/react";
 import { useCreateUser, useLogin } from "../hooks/api/useUserApi";
 import { useFormik } from "formik";
 import { PropsWithChildren, useEffect, useState } from "react";
+//@ts-ignore
 import { pick } from "ramda";
 import clsx from "clsx";
 import {

@@ -8,7 +8,7 @@ import routes from "../routes";
 
 import Form from "./form";
 
-const AuthenticationPage: React.FC<PropsWithChildren> = () => {
+const AuthenticationPage: React.FC = () => {
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
   if (isLoadingUser) return null;
 

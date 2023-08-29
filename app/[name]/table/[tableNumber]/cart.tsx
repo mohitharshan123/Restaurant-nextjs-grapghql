@@ -34,6 +34,7 @@ const Cart: React.FC<{ orders: { [key: string]: number } }> = ({ orders }) => {
             },
         };
 
+        // @ts-ignore
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
     };

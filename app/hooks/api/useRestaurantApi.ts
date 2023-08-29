@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "react-query";
+//@ts-ignore
 import { prop } from "ramda";
 
 import { queryClient, QUERY_KEYS } from "../../queryClient";
