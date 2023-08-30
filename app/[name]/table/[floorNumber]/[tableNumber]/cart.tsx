@@ -10,7 +10,7 @@ import { initializeRazorpay } from "./utils";
 
 type CartProps = {
     orders: Array<OrderItem>,
-    setActiveStep: React.Dispatch<SetStateAction<"cart" | "order">>
+    setActiveStep: React.Dispatch<SetStateAction<0 | 1>>
 }
 
 const Cart: React.FC<CartProps> = ({ orders, setActiveStep }) => {
