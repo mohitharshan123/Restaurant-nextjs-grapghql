@@ -3,7 +3,7 @@
 import { Button, Typography } from "@material-tailwind/react";
 import { useParams } from "next/navigation";
 import { OrderItem } from "./page";
-import { buildOrderItems, initializeRazorpay } from "./utils";
+import { initializeRazorpay } from "./utils";
 
 const Cart: React.FC<{ orders: Array<OrderItem> }> = ({ orders }) => {
     const { name }: any = useParams()

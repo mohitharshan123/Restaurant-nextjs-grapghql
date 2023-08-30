@@ -32,7 +32,6 @@ const OrderMenu = () => {
     if (!menu || isLoading) return null;
 
     const handleAddItemToCart = (item: MenuItem) => {
-        console.log({ item })
         const updatedOrders = [...orders];
         const itemIndex = updatedOrders.findIndex(orderItem => orderItem.id === item._id);
 
