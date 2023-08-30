@@ -11,7 +11,10 @@ class OrderService {
                     "There are no restaurants associated with this name.",
                 );
             }
-            const newOrder = await OrderModel.create({ restaurant, table: input.table, items: input.items, status: input.status })
+            const newOrder = await OrderModel.create({
+                restaurant, floor: input.floor,
+                table: input.table, items: input.items, status: input.status
+            })
             return newOrder;
         } catch (error) {
             throw new ApolloError(
@@ -20,9 +23,13 @@ class OrderService {
         }
 
     }
-    async getRestaurantOrders(restaurantName: String) {
+    async getOrders(user: any) {
         try {
-            const orders = OrderModel.find({ "restaurant.name": restaurantName })
+            const restaurant = await RestaurantModel.findOne({ userId: user.id });
+            if (!restaurant) {
+                throw new ApolloError("Restaurant not found");
+            }
+            const orders = await OrderModel.find({ "restaurant.name": restaurant.name })
             return orders;
         } catch (error) {
             throw new ApolloError(

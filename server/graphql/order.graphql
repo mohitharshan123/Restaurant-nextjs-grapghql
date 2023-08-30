@@ -8,9 +8,10 @@ mutation createOrder($input: CreateOrderInput!){
   }
 }
 
-query getRestaurantOrders($restaurantName: String!){
-  getRestaurantOrders(restaurantName: $restaurantName) {
+query getOrders{
+  getOrders {
     table
+    floor
     status
     items{
       name

@@ -32,6 +32,10 @@ export class Order {
     @prop({ required: true })
     table: string;
 
+    @Field(() => String)
+    @prop({ required: true })
+    floor: string;
+
     @Field(() => [OrderItem], { nullable: true })
     @prop({ type: Object, required: false })
     items: OrderItem[];
@@ -50,6 +54,9 @@ export class CreateOrderInput {
 
     @Field(() => String)
     table: string;
+
+    @Field(() => String)
+    floor: string;
 
     @Field(() => GraphQLJSON, { nullable: true })
     items?: OrderItem[];

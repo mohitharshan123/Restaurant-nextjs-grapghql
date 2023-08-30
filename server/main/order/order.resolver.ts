@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
 import { CreateOrderInput, Order } from "./order.schema";
 import OrderService from "./order.service";
@@ -15,7 +15,8 @@ export default class OrderResolver {
     }
 
     @Query(() => [Order])
-    getRestaurantOrders(@Arg("restaurantName") restaurantName: string) {
-        return this.orderService.getRestaurantOrders(restaurantName);
+    @Authorized()
+    getOrders(@Ctx() context: any) {
+        return this.orderService.getOrders(context.user);
     }
 }

@@ -2,7 +2,7 @@ import { MenuItem, MenuItemModel } from "main/menu-item/menu-item.schema";
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
 import Razorpay from "razorpay";
 import shortid from "shortid";
-import { OrderItem } from "../../app/[name]/table/[tableNumber]/page";
+import { OrderItem } from "../../app/[name]/table/[floorNumber]/[tableNumber]/page";
 
 export type PaymentResponse = {
     id: string;

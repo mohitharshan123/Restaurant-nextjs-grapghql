@@ -38,6 +38,7 @@ export type CreateMenuItemInput = {
 };
 
 export type CreateOrderInput = {
+  floor: Scalars['String'];
   items?: InputMaybe<Scalars['JSON']>;
   restaurantName: Scalars['String'];
   status: Scalars['String'];
@@ -136,6 +137,7 @@ export type MutationUpdateSettingsArgs = {
 
 export type Order = {
   __typename?: 'Order';
+  floor: Scalars['String'];
   items?: Maybe<Array<OrderItem>>;
   restaurant: Restaurant;
   status: Scalars['String'];
@@ -152,8 +154,8 @@ export type OrderItem = {
 export type Query = {
   __typename?: 'Query';
   category: Category;
+  getOrders: Array<Order>;
   getRestaurantMenu: Menu;
-  getRestaurantOrders: Array<Order>;
   me?: Maybe<User>;
   menu: Menu;
   myRestaurant?: Maybe<Restaurant>;
@@ -169,11 +171,6 @@ export type QueryCategoryArgs = {
 
 
 export type QueryGetRestaurantMenuArgs = {
-  restaurantName: Scalars['String'];
-};
-
-
-export type QueryGetRestaurantOrdersArgs = {
   restaurantName: Scalars['String'];
 };
 
@@ -245,12 +242,10 @@ export type CreateOrderMutationVariables = Exact<{
 
 export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', table: string, items?: Array<{ __typename?: 'OrderItem', name: string, quantity: number }> | null } };
 
-export type GetRestaurantOrdersQueryVariables = Exact<{
-  restaurantName: Scalars['String'];
-}>;
+export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRestaurantOrdersQuery = { __typename?: 'Query', getRestaurantOrders: Array<{ __typename?: 'Order', table: string, status: string, items?: Array<{ __typename?: 'OrderItem', name: string, quantity: number }> | null }> };
+export type GetOrdersQuery = { __typename?: 'Query', getOrders: Array<{ __typename?: 'Order', table: string, floor: string, status: string, items?: Array<{ __typename?: 'OrderItem', name: string, quantity: number }> | null }> };
 
 export type GetRestaurantQueryVariables = Exact<{
   id: Scalars['String'];
@@ -374,10 +369,11 @@ export const CreateOrderDocument = gql`
   }
 }
     `;
-export const GetRestaurantOrdersDocument = gql`
-    query getRestaurantOrders($restaurantName: String!) {
-  getRestaurantOrders(restaurantName: $restaurantName) {
+export const GetOrdersDocument = gql`
+    query getOrders {
+  getOrders {
     table
+    floor
     status
     items {
       name
@@ -485,8 +481,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     createOrder(variables: CreateOrderMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateOrderMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateOrderMutation>(CreateOrderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createOrder', 'mutation');
     },
-    getRestaurantOrders(variables: GetRestaurantOrdersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantOrdersQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantOrdersQuery>(GetRestaurantOrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurantOrders', 'query');
+    getOrders(variables?: GetOrdersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetOrdersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetOrdersQuery>(GetOrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOrders', 'query');
     },
     getRestaurant(variables: GetRestaurantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantQuery>(GetRestaurantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurant', 'query');

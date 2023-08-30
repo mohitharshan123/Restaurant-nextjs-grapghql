@@ -2,11 +2,20 @@
 
 import { Button, Typography } from "@material-tailwind/react";
 import { useParams } from "next/navigation";
+import { SetStateAction } from "react";
+import { toast } from "react-toastify";
+import { useCreateOrder } from "../../../../hooks/api/useOrdersApi";
 import { OrderItem } from "./page";
 import { initializeRazorpay } from "./utils";
 
-const Cart: React.FC<{ orders: Array<OrderItem> }> = ({ orders }) => {
-    const { name }: any = useParams()
+type CartProps = {
+    orders: Array<OrderItem>,
+    setActiveStep: React.Dispatch<SetStateAction<"cart" | "order">>
+}
+
+const Cart: React.FC<CartProps> = ({ orders, setActiveStep }) => {
+    const { name, floorNumber, tableNumber }: any = useParams();
+    const { mutate: createOrder } = useCreateOrder()
 
     const makePayment = async () => {
         await initializeRazorpay();
@@ -28,9 +37,24 @@ const Cart: React.FC<{ orders: Array<OrderItem> }> = ({ orders }) => {
             image: "https://manuarora.in/logo.png",
             handler: function (response: any) {
                 if (typeof response.razorpay_payment_id == 'undefined' || response.razorpay_payment_id < 1) {
-                    // Error
+                    toast('An error occuured while creating the order',
+                        {
+                            hideProgressBar: true, autoClose: 2000,
+                            type: 'error', position: 'bottom-right'
+                        })
+
+                    //Reverse the payment
                 } else {
-                    //Create order for restaurant
+                    createOrder({ input: { floor: floorNumber, table: tableNumber, restaurantName: name, status: "pending", items: orders } }, {
+                        onSuccess: () => {
+                            setActiveStep("order");
+                            toast('Successfully Created order',
+                                {
+                                    hideProgressBar: true, autoClose: 2000,
+                                    type: 'success', position: 'bottom-right'
+                                })
+                        }
+                    })
                 }
             },
         };

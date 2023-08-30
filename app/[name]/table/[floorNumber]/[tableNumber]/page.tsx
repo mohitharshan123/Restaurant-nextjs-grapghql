@@ -8,8 +8,8 @@ import { useParams } from "next/navigation";
 
 import { CreditCardIcon, ShoppingCartIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 
-import { useGetRestaurantMenu } from "../../../hooks/api/useRestaurantApi";
-import { Category } from "../../../dashboard/menu/page";
+import { useGetRestaurantMenu } from "../../../../hooks/api/useRestaurantApi";
+import { Category } from "../../../../dashboard/menu/page";
 import Cart from "./cart";
 import { MenuItem } from "main/menu-item/menu-item.schema";
 
@@ -104,7 +104,7 @@ const OrderMenu = () => {
                 </AccordionBody>
             </Accordion>
         ))}
-    </div> : <Cart {...{ orders }} />}
+    </div> : <Cart {...{ orders, setActiveStep }} />}
     </div>
 }
 
