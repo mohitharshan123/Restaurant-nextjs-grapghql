@@ -18,6 +18,7 @@ export const {
   updateSettings,
   getSettings,
   createOrder,
-  getOrders
+  getOrders,
+  getPayments
 } = getSdk(gqlClient);
 

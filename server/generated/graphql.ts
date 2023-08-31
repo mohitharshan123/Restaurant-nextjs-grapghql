@@ -40,6 +40,9 @@ export type CreateMenuItemInput = {
 export type CreateOrderInput = {
   floor: Scalars['String'];
   items?: InputMaybe<Scalars['JSON']>;
+  razorpayOrderId: Scalars['String'];
+  razorpayPaymentId: Scalars['String'];
+  razorpaySignature: Scalars['String'];
   restaurantName: Scalars['String'];
   status: Scalars['String'];
   table: Scalars['String'];
@@ -139,6 +142,9 @@ export type Order = {
   __typename?: 'Order';
   floor: Scalars['String'];
   items?: Maybe<Array<OrderItem>>;
+  razorpayOrderId: Scalars['String'];
+  razorpayPaymentId: Scalars['String'];
+  razorpaySignature: Scalars['String'];
   restaurant: Restaurant;
   status: Scalars['String'];
   table: Scalars['String'];
@@ -155,6 +161,7 @@ export type Query = {
   __typename?: 'Query';
   category: Category;
   getOrders: Array<Order>;
+  getPayments: Scalars['JSON'];
   getRestaurantMenu: Menu;
   me?: Maybe<User>;
   menu: Menu;
@@ -246,6 +253,11 @@ export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetOrdersQuery = { __typename?: 'Query', getOrders: Array<{ __typename?: 'Order', table: string, floor: string, status: string, items?: Array<{ __typename?: 'OrderItem', name: string, quantity: number }> | null }> };
+
+export type GetPaymentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPaymentsQuery = { __typename?: 'Query', getPayments: any };
 
 export type GetRestaurantQueryVariables = Exact<{
   id: Scalars['String'];
@@ -382,6 +394,11 @@ export const GetOrdersDocument = gql`
   }
 }
     `;
+export const GetPaymentsDocument = gql`
+    query getPayments {
+  getPayments
+}
+    `;
 export const GetRestaurantDocument = gql`
     query getRestaurant($id: String!) {
   restaurant(id: $id) {
@@ -483,6 +500,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getOrders(variables?: GetOrdersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetOrdersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetOrdersQuery>(GetOrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOrders', 'query');
+    },
+    getPayments(variables?: GetPaymentsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetPaymentsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetPaymentsQuery>(GetPaymentsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPayments', 'query');
     },
     getRestaurant(variables: GetRestaurantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRestaurantQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRestaurantQuery>(GetRestaurantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRestaurant', 'query');

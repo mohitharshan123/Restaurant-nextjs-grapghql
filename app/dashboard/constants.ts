@@ -10,6 +10,8 @@ export const SIDEBAR_LINKS: Array<Link> = [
   { label: "Menu", path: routes.dashboard.menu, targetSegment: "menu" },
   { label: "Orders", path: routes.dashboard.orders, targetSegment: "orders" },
   { label: "Tables", path: routes.dashboard.tables, targetSegment: "tables" },
+  { label: "Payments", path: routes.dashboard.payments, targetSegment: "payments" },
+
   {
     label: "Feedbacks",
     path: routes.dashboard.feedbacks,

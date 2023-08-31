@@ -10,7 +10,7 @@ export type VerifyResponseData = {
     paymentId?: string;
 }
 
-export async function POST(req: NextRequest): Promise<VerifyResponseData> {
+export async function POST(req: NextRequest) {
     try {
 
         await mongoose.connect(process.env.DATABASE_URL ?? "");

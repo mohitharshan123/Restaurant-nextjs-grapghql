@@ -5,10 +5,8 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
@@ -31,11 +29,12 @@ export type Category = {
 const Menu: React.FC = () => {
   const [isCategoryFormOpen, setIsCategoryFormOpen] = useState<boolean>(false);
   const [isMenuItemFormOpen, setIsMenuItemFormOpen] = useState<boolean>(false)
-
   const { data: menu, isLoading } = useGetMenu() as UseQueryResult<{
     categories: Category[];
   }>;
   if (!menu || isLoading) return null
+
+
 
   return (
     <div className="relative h-full w-full">

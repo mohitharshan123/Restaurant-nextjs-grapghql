@@ -5,6 +5,7 @@ import CategoryResolver from "main/category/category.resolver";
 import MenuItemResolver from "main/menu-item/menu-item.resolver";
 import SettingsResolver from "main/settings/settings.resolver";
 import OrderResolver from "main/order/order.resolver";
+import PaymentsResolver from "main/payments/payments.resolver";
 
 export const resolvers = [
   UserResolver,
@@ -14,4 +15,5 @@ export const resolvers = [
   MenuItemResolver,
   SettingsResolver,
   OrderResolver,
+  PaymentsResolver
 ] as const;
