@@ -43,6 +43,18 @@ export class Order {
     @Field(() => String)
     @prop({ required: true })
     status: "pending" | "delivered" | "cancelled";
+
+    @Field(() => String)
+    @prop({ required: true })
+    razorpayPaymentId: string;
+
+    @Field(() => String)
+    @prop({ required: true })
+    razorpayOrderId: string;
+
+    @Field(() => String)
+    @prop({ required: true })
+    razorpaySignature: string;
 }
 
 
@@ -63,6 +75,15 @@ export class CreateOrderInput {
 
     @Field(() => String)
     status: "pending" | "delivered" | "cancelled";
+
+    @Field(() => String)
+    razorpayPaymentId: string;
+
+    @Field(() => String)
+    razorpayOrderId: string;
+
+    @Field(() => String)
+    razorpaySignature: string;
 }
 
 export const OrderModel = mongoose.models.Order || getModelForClass(Order);

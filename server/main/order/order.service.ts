@@ -11,10 +11,7 @@ class OrderService {
                     "There are no restaurants associated with this name.",
                 );
             }
-            const newOrder = await OrderModel.create({
-                restaurant, floor: input.floor,
-                table: input.table, items: input.items, status: input.status
-            })
+            const newOrder = await OrderModel.create(input)
             return newOrder;
         } catch (error) {
             throw new ApolloError(
