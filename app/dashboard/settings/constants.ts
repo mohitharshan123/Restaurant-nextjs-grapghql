@@ -23,4 +23,16 @@ export const SETTINGS_CATEGORIES: { [key: string]: SettingCategory } = {
         link: routes.dashboard.settings.payment,
         icon: CurrencyDollarIcon
     },
+    "working_hours": {
+        label: "Working Hours",
+        description: "Update restaurant working hours.",
+        link: routes.dashboard.settings.payment,
+        icon: CurrencyDollarIcon
+    },
+    "qr_scanner_styling": {
+        label: "QR Scanner Styling",
+        description: "Update QR Scanner styles.",
+        link: routes.dashboard.settings.payment,
+        icon: CurrencyDollarIcon
+    },
 }
