@@ -1,8 +1,8 @@
 "use client"
 
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardFooter, Typography } from "@material-tailwind/react";
 import { useParams } from "next/navigation";
-import { SetStateAction } from "react";
+import React, { SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { OrderItem } from "./page";
 import { createRazorpayOrder, initializeRazorpay, verifyPaymentAndCreateOrder } from "./utils";
@@ -59,7 +59,7 @@ const Cart: React.FC<CartProps> = ({ orders, setActiveStep }) => {
                     };
                     const result = await verifyPaymentAndCreateOrder(payload);
                     const responseData = await result.json();
-      
+
                     toast(await responseData?.message,
                         {
                             hideProgressBar: true, autoClose: 2000,
@@ -76,14 +76,18 @@ const Cart: React.FC<CartProps> = ({ orders, setActiveStep }) => {
         paymentObject.open();
     };
 
-    return <div className="flex flex-col space-y-4 mt-20">
-        {orders.map(order => <Typography variant="h4">{order.name} x {order.quantity}</Typography>)}
+    return <Card className="flex flex-col space-y-4">
+        <CardBody>
+            {orders.map(order => <Typography variant="small" className="font-bold text-lg">{order.name} x {order.quantity}</Typography>)}
+        </CardBody>
+        <CardFooter>
+            <Button onClick={makePayment} className="rounded-xl">Make payment</Button>
+        </CardFooter>
         <Script
             id="razorpay-checkout-js"
             src="https://checkout.razorpay.com/v1/checkout.js"
         />
-        <Button onClick={makePayment}>Make payment</Button>
-    </div>
+    </Card>
 }
 
 export default Cart;

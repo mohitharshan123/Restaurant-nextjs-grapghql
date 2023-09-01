@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Layout: React.FC<PropsWithChildren> = ({ children }) => (
     <html>
         <body>
-            <div className="p-5">{children}<ToastContainer /></div>
+            <div className="overflow-hidden">{children}<ToastContainer /></div>
         </body>
     </html>
 );
