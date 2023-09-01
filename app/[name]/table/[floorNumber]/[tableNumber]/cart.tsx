@@ -11,6 +11,7 @@ import Script from "next/script";
 type CartProps = {
     orders: Array<OrderItem>,
     setActiveStep: React.Dispatch<SetStateAction<0 | 1>>
+    setOrder: React.Dispatch<SetStateAction<Array<OrderItem>>>;
 }
 
 export type CreateOrderPayload = {
@@ -24,7 +25,7 @@ export type CreateOrderPayload = {
     tableNumber: string;
 }
 
-const Cart: React.FC<CartProps> = ({ orders, setActiveStep }) => {
+const Cart: React.FC<CartProps> = ({ orders, setActiveStep, setOrder }) => {
     const { name, floorNumber, tableNumber }: any = useParams();
 
     const makePayment = async () => {
@@ -66,7 +67,8 @@ const Cart: React.FC<CartProps> = ({ orders, setActiveStep }) => {
                             type: 'success', position: 'bottom-right'
                         });
 
-                    setActiveStep(0)
+                    setActiveStep(0);
+                    setOrder([]);
                 }
             },
         };

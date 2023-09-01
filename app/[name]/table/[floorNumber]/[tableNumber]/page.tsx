@@ -108,7 +108,7 @@ const OrderMenu = () => {
                         </AccordionBody>
                     </Accordion>
                 ))}
-            </div> : <Cart {...{ orders, setActiveStep }} />}
+            </div> : <Cart {...{ orders, setActiveStep, setOrder }} />}
         </div></>
 }
 
