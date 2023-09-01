@@ -35,4 +35,10 @@ export const SETTINGS_CATEGORIES: { [key: string]: SettingCategory } = {
         link: routes.dashboard.settings.payment,
         icon: CurrencyDollarIcon
     },
+    "bill_settings": {
+        label: "Bill Settings",
+        description: "Update additional charges, GST etc on bill.",
+        link: routes.dashboard.settings.payment,
+        icon: CurrencyDollarIcon
+    },
 }
