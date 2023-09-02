@@ -17,8 +17,7 @@ import { useMyRestaurant } from "../hooks/api/useRestaurantApi";
 import { useRouter } from "next/navigation";
 import routes from "../routes";
 
-
-const pusher = new Pusher("cf869a27ce58994e88ba", {
+const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_API_KEY ?? "", {
     cluster: "ap2",
 });
 
