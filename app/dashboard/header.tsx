@@ -106,8 +106,8 @@ const Header: React.FC = () => {
                         <Typography variant="h6">{notification.message}</Typography>
                     </div>
                     <div className="mt-2">
-                        <Typography variant="small" className="font-bold text-xs">Floor: {notification.floorNumber}</Typography>
-                        <Typography variant="small" className="font-bold text-xs">Table :{notification.tableNumber}</Typography>
+                        <Typography variant="small" className="font-bold text-xs">Floor number: {notification.floorNumber}</Typography>
+                        <Typography variant="small" className="font-bold text-xs">Table number:{notification.tableNumber}</Typography>
                     </div>
                 </CardBody>
             </Card>)}
