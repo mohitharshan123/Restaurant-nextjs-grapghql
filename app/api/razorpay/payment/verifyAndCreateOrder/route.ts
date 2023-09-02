@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
             NextResponse.json({ message: 'Invalid transaction' }, { status: 500 })
         }
 
-        pusher.trigger(CHANNEL_TYPES.ORDERS, NOTIFICATION_TYPES.NEW_ORDER,
+        await pusher.trigger(CHANNEL_TYPES.ORDERS, NOTIFICATION_TYPES.NEW_ORDER,
             { message: "You have a new order", type: NOTIFICATION_TYPES.NEW_ORDER, tableNumber, floorNumber });
         return NextResponse.json({
             message: "Successfully created order",
