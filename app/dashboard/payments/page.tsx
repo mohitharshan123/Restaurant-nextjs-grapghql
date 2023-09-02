@@ -78,16 +78,16 @@ const Payments = () => {
                         (
                             {
                                 id, amount, status, method, contact
-                            },
-                            index,
-                        ) => {
+                            }: any,
+                            index: number,
+                        ): any => {
                             const isLast = index === TABLE_ROWS.length - 1;
                             const classes = isLast
                                 ? "p-4"
                                 : "p-4 border-b border-blue-gray-50";
 
                             return (
-                                <tr key={name}>
+                                <tr key={id}>
                                     {/* <td className={classes}>
                                         <div className="flex items-center gap-3">
                                             <Avatar

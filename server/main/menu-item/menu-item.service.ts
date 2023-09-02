@@ -12,7 +12,7 @@ class MenuItemService {
                     "Restaurant not found.",
                 );
             }
-            const category = restaurant.menu?.categories.find(({ _id }) => _id?.toString() === input.categoryId);
+            const category = restaurant.menu?.categories.find(({ _id }: { _id: any }) => _id?.toString() === input.categoryId);
             if (!category) {
                 throw new ApolloError(
                     "Category not found.",

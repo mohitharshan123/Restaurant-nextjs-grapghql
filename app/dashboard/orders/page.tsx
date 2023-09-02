@@ -56,14 +56,14 @@ const Orders = () => {
     if (!orders) return null;
 
     return <Tabs value={selectedTab}>
-        <TabsHeader>
+        <TabsHeader className="fixed w-[calc(100vw-350px)] z-50">
             {tabs.map(({ label, value }) => (
                 <Tab key={value} value={value} onClick={() => setSelectedTab(value)}>
                     {label} ({orders.length})
                 </Tab>
             ))}
         </TabsHeader>
-        <TabsBody className="w-full flex flex-col">
+        <TabsBody className="w-full flex flex-col mt-10 overflow-y-scroll">
             {selectedTab === "pending" && orders?.map(({ table, floor, items }) => <Card className="mt-6 w-full">
                 <CardBody className="flex flex-row">
                     <div className="flex flex-col space-y-2 w-1/4">

@@ -1,7 +1,7 @@
 import { MenuItem, MenuItemModel } from "./menu-item.schema";
-import { Menu, MenuItemInput } from "../menu/menu.schema";
+import { Menu } from "../menu/menu.schema";
 
-const createMenuItems = (menu: Menu, items: Array<MenuItemInput>) =>
+const createMenuItems = (menu: Menu, items: Array<any>) =>
   items.map((item: MenuItem) => {
     const menuItem = new MenuItemModel();
     menuItem.name = item.name;

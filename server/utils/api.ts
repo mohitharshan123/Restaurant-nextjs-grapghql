@@ -1,7 +1,9 @@
 import { GraphQLClient } from "graphql-request";
 import { getSdk } from "../generated/graphql";
 
-const gqlClient = new GraphQLClient("http://localhost:3000/api/graphql");
+const url = `${process.env.NEXT_PUBLIC_DINE_URL}/api/graphql`
+
+const gqlClient = new GraphQLClient(url);
 
 export const {
   getRestaurants,

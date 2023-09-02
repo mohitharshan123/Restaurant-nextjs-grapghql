@@ -77,6 +77,7 @@ export const config = {
 };
 
 const app = new App();
+// @ts-ignore 
 const connection = await app.connectServer();
 const server = app.server;
 

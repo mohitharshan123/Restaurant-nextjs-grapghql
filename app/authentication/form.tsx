@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { PresentationChartBarIcon } from "@heroicons/react/24/solid";
 import { Spinner } from "@material-tailwind/react";
 
 import { useCreateUser, useLogin } from "../hooks/api/useUserApi";

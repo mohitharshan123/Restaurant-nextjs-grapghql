@@ -3,12 +3,28 @@ import mongoose from 'mongoose'
 import crypto from "crypto"
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
 import { OrderModel } from "main/order/order.schema";
+import Pusher from "pusher";
 
+enum CHANNEL_TYPES {
+    ORDERS = "ORDERS"
+}
+
+enum NOTIFICATION_TYPES {
+    NEW_ORDER = "NEW_ORDER"
+}
 export type VerifyResponseData = {
     message: string;
     orderId?: string;
     paymentId?: string;
 }
+
+const pusher = new Pusher({
+    appId: process.env.PUSHER_APP_ID ?? "",
+    key: process.env.PUSHER_API_KEY ?? "",
+    secret: process.env.PUSHER_SECRET ?? "",
+    cluster: process.env.PUSHER_CLUSTER_NAME ?? "",
+    useTLS: false
+});
 
 export async function POST(req: NextRequest) {
     try {
@@ -42,6 +58,9 @@ export async function POST(req: NextRequest) {
         if (digest !== razorpaySignature) {
             NextResponse.json({ message: 'Invalid transaction' }, { status: 500 })
         }
+
+        pusher.trigger(CHANNEL_TYPES.ORDERS, NOTIFICATION_TYPES.NEW_ORDER,
+            { message: "You have a new order", type: NOTIFICATION_TYPES.NEW_ORDER, tableNumber, floorNumber });
         return NextResponse.json({
             message: "Successfully created order",
             orderId: razorpayOrderId,
