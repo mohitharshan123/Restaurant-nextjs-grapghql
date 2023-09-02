@@ -26,7 +26,7 @@ class OrderService {
             if (!restaurant) {
                 throw new ApolloError("Restaurant not found");
             }
-            const orders = await OrderModel.find({ "restaurant.name": restaurant.name })
+            const orders = await OrderModel.find({ "restaurant.name": restaurant.name }).sort({ createdAt: -1 })
             return orders;
         } catch (error) {
             throw new ApolloError(

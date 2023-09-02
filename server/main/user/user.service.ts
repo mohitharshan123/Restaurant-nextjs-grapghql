@@ -69,8 +69,8 @@ class UserService {
       name: "accessToken",
       value: token,
       options: {
-        maxAge: 3.154e10, // 1 year
-        domain: "restaurant-nextjs-grapghql.vercel.app",
+        maxAge: 3.154e10, 
+        domain: process.env.DOMAIN,
         path: "/",
         sameSite: "strict",
         secure: process.env.NODE_ENV === "production",

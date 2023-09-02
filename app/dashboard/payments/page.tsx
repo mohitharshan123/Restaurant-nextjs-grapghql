@@ -1,6 +1,6 @@
 "use client";
 
-import { MagnifyingGlassIcon, ArrowDownTrayIcon, PencilIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import {
     Button,
     Card,
@@ -14,9 +14,8 @@ import {
     Input,
     Tooltip,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React from "react";
 import { useFetchPayments } from "../../hooks/api/usePaymentsApi";
-import { OrderItem } from "../../[name]/table/[floorNumber]/[tableNumber]/page";
 import { pick } from "ramda"
 
 const TABLE_HEAD = ["ID", "Amount", "Status", "Contact", "Method"];
@@ -29,8 +28,8 @@ const Payments = () => {
 
     const TABLE_ROWS = paymentData?.items.map(pick(["id", "amount", "status", "contact", "method"]));
 
-    return <Card className="h-full w-full">
-        <CardHeader floated={false} shadow={false} className="rounded-none">
+    return <Card className="h-content w-[calc(100vw-350px)] mr-80 mb-20">
+        <CardHeader floated={false} shadow={false} className="rounded-xl p-4 fixed z-10 top-20 w-[calc(100vw-350px)] bg-white shadow-md left-[305px]">
             <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                 <div>
                     <Typography variant="h5" color="blue-gray">
@@ -53,8 +52,8 @@ const Payments = () => {
                 </div>
             </div>
         </CardHeader>
-        <CardBody className="overflow-scroll px-0">
-            <table className="w-full min-w-max table-auto text-left">
+        <CardBody className="p-0">
+            <table className="w-full min-w-max table-auto text-left overflow-y-scroll mt-[100px] mb-5">
                 <thead>
                     <tr>
                         {TABLE_HEAD.map((head) => (
@@ -73,8 +72,8 @@ const Payments = () => {
                         ))}
                     </tr>
                 </thead>
-                <tbody>
-                    {TABLE_ROWS.map(
+                <tbody className="p-0">
+                    {[...TABLE_ROWS, ...TABLE_ROWS].map(
                         (
                             {
                                 id, amount, status, method, contact
@@ -88,24 +87,6 @@ const Payments = () => {
 
                             return (
                                 <tr key={id}>
-                                    {/* <td className={classes}>
-                                        <div className="flex items-center gap-3">
-                                            <Avatar
-                                                src={img}
-                                                alt={name}
-                                                size="md"
-                                                className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
-                                            />
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-bold"
-                                            >
-                                                {name}
-                                            </Typography>
-                                        </div>
-                                    </td> */}
-
                                     <td className={classes}>
                                         <Typography
                                             variant="small"
@@ -176,6 +157,37 @@ const Payments = () => {
                 </tbody>
             </table>
         </CardBody>
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 fixed bottom-0 bg-white w-[calc(100vw-350px)]">
+            <Button variant="outlined" size="sm">
+                Previous
+            </Button>
+            <div className="flex items-center gap-2">
+                <IconButton variant="outlined" size="sm">
+                    1
+                </IconButton>
+                <IconButton variant="text" size="sm">
+                    2
+                </IconButton>
+                <IconButton variant="text" size="sm">
+                    3
+                </IconButton>
+                <IconButton variant="text" size="sm">
+                    ...
+                </IconButton>
+                <IconButton variant="text" size="sm">
+                    8
+                </IconButton>
+                <IconButton variant="text" size="sm">
+                    9
+                </IconButton>
+                <IconButton variant="text" size="sm">
+                    10
+                </IconButton>
+            </div>
+            <Button variant="outlined" size="sm">
+                Next
+            </Button>
+        </CardFooter>
     </Card>
 }
 

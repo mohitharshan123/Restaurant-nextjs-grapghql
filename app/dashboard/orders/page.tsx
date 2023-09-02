@@ -64,35 +64,37 @@ const Orders = () => {
             ))}
         </TabsHeader>
         <TabsBody className="w-full flex flex-col mt-10 overflow-y-scroll">
-            {selectedTab === "pending" && orders?.map(({ table, floor, items }) => <Card className="mt-6 w-full">
-                <CardBody className="flex flex-row">
-                    <div className="flex flex-col space-y-2 w-1/4">
-                        <Typography variant="h6" color="blue-gray" className="mb-2">
-                            Floor {floor} / Table {table}
-                        </Typography>
-                        {!isEmpty(items) && items?.map(({ name, quantity }) =>
-                            <Typography>
-                                {name} X {quantity}
+            <div className="mb-28">
+                {selectedTab === "pending" && orders?.map(({ table, floor, items }) => <Card className="mt-6 w-full">
+                    <CardBody className="flex flex-row">
+                        <div className="flex flex-col space-y-2 w-1/4">
+                            <Typography variant="h6" color="blue-gray" className="mb-2">
+                                Floor {floor} / Table {table}
                             </Typography>
-                        )}
-                    </div>
-                    <div className="w-full h-full">
-                        <CardBody className="h-full overflow-y-scroll justify-center items-center flex flex-col">
-                            <div className="grid grid-cols-1 sm:grid-cols-10 md:grid-cols-10 lg:grid-cols-10 gap-3 mt-10">
-                                {Array.from({ length: 80 }, (_, index) => <Card className="w-10 h-10 cursor-pointer">
-                                    <CardBody className={classnames("cursor-pointer h-10 items-center justify-center flex rounded-xl", { "bg-red-200": Number(table) === index + 1, "bg-amber-200": restaurant?.floorPlan[floor].includes(index) && Number(table) !== index + 1 })}>
-                                        {index + 1}
-                                    </CardBody>
-                                </Card>)}
-                            </div>
-                        </CardBody>
-                    </div>
+                            {!isEmpty(items) && items?.map(({ name, quantity }) =>
+                                <Typography>
+                                    {name} X {quantity}
+                                </Typography>
+                            )}
+                        </div>
+                        <div className="w-full h-full">
+                            <CardBody className="h-full overflow-y-scroll justify-center items-center flex flex-col">
+                                <div className="grid grid-cols-1 sm:grid-cols-10 md:grid-cols-10 lg:grid-cols-10 gap-3 mt-10">
+                                    {Array.from({ length: 80 }, (_, index) => <Card className="w-10 h-10 cursor-pointer">
+                                        <CardBody className={classnames("cursor-pointer h-10 items-center justify-center flex rounded-xl", { "bg-red-200": Number(table) === index + 1, "bg-amber-200": restaurant?.floorPlan[floor].includes(index) && Number(table) !== index + 1 })}>
+                                            {index + 1}
+                                        </CardBody>
+                                    </Card>)}
+                                </div>
+                            </CardBody>
+                        </div>
 
-                </CardBody>
-                <CardFooter className="pt-0">
-                    <Button className="rounded-xl">Mark as completed</Button>
-                </CardFooter>
-            </Card>)}
+                    </CardBody>
+                    <CardFooter className="pt-0">
+                        <Button className="rounded-xl">Mark as completed</Button>
+                    </CardFooter>
+                </Card>)}
+            </div>
         </TabsBody>
     </Tabs>
 }

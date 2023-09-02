@@ -1,11 +1,8 @@
 import {
     getModelForClass,
     prop,
-    ReturnModelType,
-    queryMethod,
     mongoose,
 } from "@typegoose/typegoose";
-import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import { Field, InputType, ObjectType } from "type-graphql";
 import GraphQLJSON from 'graphql-type-json';
 import { Restaurant } from "main/restaurant/restaurant.schema";
@@ -86,4 +83,4 @@ export class CreateOrderInput {
     razorpaySignature: string;
 }
 
-export const OrderModel = mongoose.models.Order || getModelForClass(Order);
+export const OrderModel = mongoose.models.Order || getModelForClass(Order, { schemaOptions: { timestamps: true } });
