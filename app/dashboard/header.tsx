@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import {
+    Button,
     Card,
     CardBody,
     Drawer,
@@ -44,7 +45,7 @@ export enum NOTIFICATION_TYPES {
 const Header: React.FC = () => {
     const router = useRouter();
 
-    const [isNotificationsDrawerOpen, setIsNotificationDrawerOpen] = useState<boolean>(false)
+    const [isNotificationsDrawerOpen, setIsNotificationDrawerOpen] = useState<boolean>(false);
     const { data: restaurant } = useMyRestaurant() as UseQueryResult<{
         name: string;
     }>;
@@ -74,24 +75,8 @@ const Header: React.FC = () => {
 
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <BellIcon className="h-5 w-5 cursor-pointer" onClick={() => setIsNotificationDrawerOpen(true)} />
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <a href="#" className="flex items-center">
-                    <UserIcon className="h-5 w-5" />
-                </a>
-            </Typography>
+            <BellIcon className="h-5 w-5 cursor-pointer" onClick={() => setIsNotificationDrawerOpen(isOpen => !isOpen)} />
+            <UserIcon className="h-5 w-5" />
         </ul>
     );
 
@@ -113,7 +98,7 @@ const Header: React.FC = () => {
                 </div>
             </Navbar>
         </div>
-        <Drawer open={isNotificationsDrawerOpen} onClose={() => setIsNotificationDrawerOpen(false)} placement="right" overlay={false} className="overflow-auto mt-20">
+        <Drawer open={isNotificationsDrawerOpen} onClose={() => setIsNotificationDrawerOpen(false)} placement="right" overlay={false} className="overflow-auto">
             {notifications.map((notification: OrderNotification) => <Card className="rounded-none">
                 <CardBody className="flex flex-col justify-center w-full cursor-pointer" onClick={() => handleNotificationClick(notification.type)}>
                     <div className="flex flex-row space-x-2 ">
