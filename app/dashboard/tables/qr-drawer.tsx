@@ -39,7 +39,7 @@ const QRDrawer: React.FC<QRDrawerProps> = ({ isQRDrawerOpen, setIsQRDrawerOpen, 
                 <Typography variant="h3">{restaurant?.name}</Typography>
                 <Typography variant="h6">{`Table ${tableNumber + 1}`}</Typography>
                 <Canvas
-                    text={`https://www.dine.com/${restaurant?.name}/table/${selectedFloor}/${tableNumber + 1}`}
+                    text={`https://${window.location.host}/${restaurant?.name}/table/${selectedFloor}/${tableNumber + 1}`}
                     options={{
                         errorCorrectionLevel: 'M',
                         margin: 3,
