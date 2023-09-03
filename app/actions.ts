@@ -3,5 +3,5 @@
 import { cookies } from 'next/headers'
 
 export async function logout() {
-    await cookies().delete('accessToken')
+    await cookies().set("accessToken", '')
 }
