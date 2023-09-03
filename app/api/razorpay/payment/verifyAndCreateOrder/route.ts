@@ -4,6 +4,7 @@ import crypto from "crypto"
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
 import { OrderModel } from "main/order/order.schema";
 import Pusher from "pusher";
+import { NotificationModel } from "main/notification/notification.schema";
 
 enum CHANNEL_TYPES {
     ORDERS = "ORDERS"
@@ -59,8 +60,10 @@ export async function POST(req: NextRequest) {
             NextResponse.json({ message: 'Invalid transaction' }, { status: 500 })
         }
 
+        await NotificationModel.create({ restaurant, type: NOTIFICATION_TYPES.NEW_ORDER, text: "You have a new order", itemId: newOrder._id, order: newOrder })
+
         await pusher.trigger(CHANNEL_TYPES.ORDERS, NOTIFICATION_TYPES.NEW_ORDER,
-            { message: "You have a new order", type: NOTIFICATION_TYPES.NEW_ORDER, tableNumber, floorNumber });
+            { text: "You have a new order", type: NOTIFICATION_TYPES.NEW_ORDER, order: newOrder });
         return NextResponse.json({
             message: "Successfully created order",
             orderId: razorpayOrderId,

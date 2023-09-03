@@ -8,12 +8,12 @@ import OrderResolver from "main/order/order.resolver";
 import PaymentsResolver from "main/payments/payments.resolver";
 
 export const resolvers = [
-  UserResolver,
   RestaurantResolver,
+  UserResolver,
   MenuResolver,
   CategoryResolver,
   MenuItemResolver,
   SettingsResolver,
   OrderResolver,
-  PaymentsResolver
+  PaymentsResolver,
 ] as const;

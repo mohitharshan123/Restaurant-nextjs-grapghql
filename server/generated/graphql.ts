@@ -138,6 +138,15 @@ export type MutationUpdateSettingsArgs = {
   input: UpdateSettingsInput;
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  itemID: Scalars['String'];
+  order: Order;
+  restaurant: Restaurant;
+  text: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type Order = {
   __typename?: 'Order';
   floor: Scalars['String'];
@@ -159,7 +168,7 @@ export type OrderItem = {
 
 export type Query = {
   __typename?: 'Query';
-  category: Category;
+  category: Array<Notification>;
   getOrders: Array<Order>;
   getPayments: Scalars['JSON'];
   getRestaurantMenu: Menu;
@@ -169,11 +178,6 @@ export type Query = {
   restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
   settings?: Maybe<Settings>;
-};
-
-
-export type QueryCategoryArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -195,6 +199,7 @@ export type Restaurant = {
   location?: Maybe<Scalars['String']>;
   menu?: Maybe<Menu>;
   name: Scalars['String'];
+  notifications: Array<Notification>;
   settings: Settings;
   userId?: Maybe<Scalars['String']>;
 };
@@ -312,7 +317,7 @@ export type CurrentUserQuery = { __typename?: 'Query', me?: { __typename?: 'User
 export type MyRestaurantQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant?: { __typename?: 'Restaurant', name: string, location?: string | null, contact?: string | null, floorPlan?: any | null } | null };
+export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant?: { __typename?: 'Restaurant', name: string, location?: string | null, contact?: string | null, floorPlan?: any | null, notifications: Array<{ __typename?: 'Notification', type: string, text: string, order: { __typename?: 'Order', table: string, floor: string } }> } | null };
 
 
 export const CreateCategoryDocument = gql`
@@ -472,6 +477,14 @@ export const MyRestaurantDocument = gql`
     location
     contact
     floorPlan
+    notifications {
+      type
+      text
+      order {
+        table
+        floor
+      }
+    }
   }
 }
     `;

@@ -26,5 +26,13 @@ query myRestaurant {
     location
     contact
     floorPlan
+    notifications {
+      type
+      text
+      order {
+        table
+        floor
+      }
+    }
   }
 }

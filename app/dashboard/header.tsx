@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import {
-    Button,
     Card,
     CardBody,
     Drawer,
@@ -16,20 +15,21 @@ import { BellIcon, ShoppingBagIcon, UserIcon } from "@heroicons/react/24/outline
 import { useMyRestaurant } from "../hooks/api/useRestaurantApi";
 import { useRouter } from "next/navigation";
 import routes from "../routes";
+import { Order } from "main/order/order.schema";
+import { queryClient, QUERY_KEYS } from "../queryClient";
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_API_KEY ?? "", {
-    cluster: "ap2",
+    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER_NAME || "ap2",
 });
 
 export interface Notification {
-    message: string;
+    text: string;
     type: "NEW_ORDER";
     link?: string;
 }
 
 interface OrderNotification extends Notification {
-    tableNumber?: string;
-    floorNumber?: string
+    order: Order
 }
 
 export enum CHANNEL_TYPES {
@@ -47,6 +47,7 @@ const Header: React.FC = () => {
     const [isNotificationsDrawerOpen, setIsNotificationDrawerOpen] = useState<boolean>(false);
     const { data: restaurant } = useMyRestaurant() as UseQueryResult<{
         name: string;
+        notifications: OrderNotification[]
     }>;
 
     const handleNotificationClick = (type: string) => {
@@ -58,13 +59,17 @@ const Header: React.FC = () => {
     }
 
 
-    const [notifications, setNotifications] = useState<Array<Notification>>([{ message: "You have a new order", type: "NEW_ORDER" }]);
 
     useEffect(() => {
         const channel = pusher.subscribe(CHANNEL_TYPES.ORDERS);
 
         channel.bind(NOTIFICATION_TYPES.NEW_ORDER, (data: Notification) => {
-            setNotifications([...notifications, data]);
+            queryClient.setQueryData([QUERY_KEYS.myRestaurant], (prevData: any) => ({
+                myRestaurant: {
+                    ...prevData.myRestaurant,
+                    notifications: [data, ...prevData.myRestaurant.notifications],
+                }
+            }));
         });
 
         return () => {
@@ -98,15 +103,15 @@ const Header: React.FC = () => {
             </Navbar>
         </div>
         <Drawer open={isNotificationsDrawerOpen} onClose={() => setIsNotificationDrawerOpen(false)} placement="right" overlay={false} className="overflow-auto">
-            {notifications.map((notification: OrderNotification) => <Card className="rounded-none">
+            {restaurant?.notifications.map((notification: OrderNotification) => <Card className="rounded-none">
                 <CardBody className="flex flex-col justify-center w-full cursor-pointer" onClick={() => handleNotificationClick(notification.type)}>
                     <div className="flex flex-row space-x-2 ">
                         <ShoppingBagIcon className="w-5 h-5" />
-                        <Typography variant="h6">{notification.message}</Typography>
+                        <Typography variant="h6">{notification.text}</Typography>
                     </div>
                     <div className="mt-2">
-                        <Typography variant="small" className="font-bold text-xs">Floor: {notification.floorNumber}</Typography>
-                        <Typography variant="small" className="font-bold text-xs">Table :{notification.tableNumber}</Typography>
+                        <Typography variant="small" className="font-bold text-xs">Floor: {notification.order.floor}</Typography>
+                        <Typography variant="small" className="font-bold text-xs">Table: {notification.order.table}</Typography>
                     </div>
                 </CardBody>
             </Card>)}

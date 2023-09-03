@@ -1,12 +1,13 @@
-import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver, Authorized, FieldResolver, Root } from "type-graphql";
 import {
   CreateRestaurantInput,
   Restaurant,
 } from "main/restaurant/restaurant.schema";
+import { Notification, NotificationModel } from "main/notification/notification.schema";
 import RestaurantService from "main/restaurant/restaurant.service";
 import GraphQLJSON from "graphql-type-json";
 
-@Resolver()
+@Resolver(() => Restaurant)
 export default class RestaurantResolver {
   constructor(private restaurantService: RestaurantService) {
     this.restaurantService = new RestaurantService();
@@ -34,5 +35,11 @@ export default class RestaurantResolver {
   @Authorized()
   updateFloorPlan(@Arg("newFloorPlan", () => GraphQLJSON) newFloorPlan: Record<string, number[]>, @Ctx() context: any) {
     return this.restaurantService.updateFloorPlan(context.user.id, newFloorPlan);
+  }
+
+  @FieldResolver(() => [Notification])
+  async notifications(@Root() restaurant: any): Promise<Notification[]> {
+    const notifications = await NotificationModel.find({ "restaurant._id": restaurant._doc._id }).sort({ createdAt: -1 });
+    return notifications;
   }
 }
