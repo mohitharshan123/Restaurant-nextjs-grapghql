@@ -5,6 +5,10 @@ import {
     Card,
     CardBody,
     Drawer,
+    Menu,
+    MenuHandler,
+    MenuItem,
+    MenuList,
     Navbar,
     Typography,
 } from "@material-tailwind/react";
@@ -17,6 +21,7 @@ import { useRouter } from "next/navigation";
 import routes from "../routes";
 import { Order } from "main/order/order.schema";
 import { queryClient, QUERY_KEYS } from "../queryClient";
+import { logout } from "../actions";
 
 const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_API_KEY ?? "", {
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER_NAME || "ap2",
@@ -43,6 +48,7 @@ export enum NOTIFICATION_TYPES {
 
 const Header: React.FC = () => {
     const router = useRouter();
+
 
     const [isNotificationsDrawerOpen, setIsNotificationDrawerOpen] = useState<boolean>(false);
     const { data: restaurant } = useMyRestaurant() as UseQueryResult<{
@@ -77,10 +83,23 @@ const Header: React.FC = () => {
         };
     }, []);
 
+
+    const handleLogout = () => {
+        logout();
+        window.location.reload()
+    }
+
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
             <BellIcon className="h-5 w-5 cursor-pointer" onClick={() => setIsNotificationDrawerOpen(isOpen => !isOpen)} />
-            <UserIcon className="h-5 w-5" />
+            <Menu>
+                <MenuHandler>
+                    <UserIcon className="h-5 w-5 cursor-pointer" />
+                </MenuHandler>
+                <MenuList className="outline-none">
+                    <MenuItem onClick={handleLogout}> <Typography variant="small" className="cursor-pointer outline-none" >Logout</Typography></MenuItem>
+                </MenuList>
+            </Menu>
         </ul>
     );
 
