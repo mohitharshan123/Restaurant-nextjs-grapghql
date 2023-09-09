@@ -1,102 +1,101 @@
 "use client";
 
 import {
-    Tabs,
-    TabsHeader,
-    TabsBody,
-    Tab,
-    TabPanel,
-    Button,
     Card,
     CardBody,
-    CardFooter,
     Typography,
 } from "@material-tailwind/react";
 import { isEmpty } from "class-validator";
-import classnames from "classnames";
-import React, { useState } from "react";
+import React from "react";
 import { UseQueryResult } from "react-query";
 import { useFetchOrders } from "../../hooks/api/useOrdersApi";
-import { useMyRestaurant } from "../../hooks/api/useRestaurantApi";
 import { OrderItem } from "../../[name]/table/[floorNumber]/[tableNumber]/page";
-
-const tabs: Array<{ label: string, value: "pending" | "cancelled" | "completed" }> = [
-    {
-        label: "Pending",
-        value: "pending",
-    },
-    {
-        label: "Completed",
-        value: "completed",
-    },
-    {
-        label: "Cancelled",
-        value: "cancelled",
-    },
-
-];
 
 export type Order = {
     floor: string;
     items?: Array<OrderItem>;
-    status: string;
+    status: "pending" | "preparing" | "completed";
     table: string;
 };
 
-
-const Orders = () => {
-    const { data: orders } = useFetchOrders() as UseQueryResult<Array<Order>>;
-    const { data: restaurant } = useMyRestaurant() as UseQueryResult<{
-        name: string;
-        floorPlan: Record<string, number[]>
-    }>;
-
-    const [selectedTab, setSelectedTab] = useState<"pending" | "completed" | "cancelled">("pending")
-
-    if (!orders) return null;
-
-    return <Tabs value={selectedTab}>
-        <TabsHeader className="fixed w-[calc(100vw-350px)] z-50">
-            {tabs.map(({ label, value }) => (
-                <Tab key={value} value={value} onClick={() => setSelectedTab(value)}>
-                    {label} ({orders.length})
-                </Tab>
-            ))}
-        </TabsHeader>
-        <TabsBody className="w-full flex flex-col mt-10 overflow-y-scroll">
-            <div className="mb-28">
-                {selectedTab === "pending" && orders?.map(({ table, floor, items }) => <Card className="mt-6 w-full">
-                    <CardBody className="flex flex-row">
-                        <div className="flex flex-col space-y-2 w-1/4">
-                            <Typography variant="h6" color="blue-gray" className="mb-2">
-                                Floor {floor} / Table {table}
-                            </Typography>
-                            {!isEmpty(items) && items?.map(({ name, quantity }) =>
-                                <Typography>
-                                    {name} X {quantity}
-                                </Typography>
-                            )}
-                        </div>
-                        <div className="w-full h-full">
-                            <CardBody className="h-full overflow-y-scroll justify-center items-center flex flex-col">
-                                <div className="grid grid-cols-1 sm:grid-cols-10 md:grid-cols-10 lg:grid-cols-10 gap-3 mt-10">
-                                    {Array.from({ length: 80 }, (_, index) => <Card className="w-10 h-10 cursor-pointer">
-                                        <CardBody className={classnames("cursor-pointer h-10 items-center justify-center flex rounded-xl", { "bg-red-200": Number(table) === index + 1, "bg-amber-200": restaurant?.floorPlan[floor].includes(index) && Number(table) !== index + 1 })}>
-                                            {index + 1}
-                                        </CardBody>
-                                    </Card>)}
-                                </div>
-                            </CardBody>
-                        </div>
-
-                    </CardBody>
-                    <CardFooter className="pt-0">
-                        <Button className="rounded-xl">Mark as completed</Button>
-                    </CardFooter>
-                </Card>)}
-            </div>
-        </TabsBody>
-    </Tabs>
+type DraggableItem = {
+    type: string;
+    id: string;
+    name: string;
+    children?: DraggableItem[]
 }
 
-export default Orders;
+export type DraggableProps = {
+    type?: string,
+    children?: DraggableItem[],
+    props?: { orientation: string }
+    id?: string;
+}
+
+export type DropProps = {
+    removedIndex: number, addedIndex: number, payload: any
+}
+
+
+import { Container, Draggable } from "react-smooth-dnd";
+import useBoard from "./useBoard";
+
+const Cards: React.FC = () => {
+    const { data: orders } = useFetchOrders() as UseQueryResult<Array<Order>>;
+    const { handleCardDrop, getCardPayload, scene } = useBoard({ orders });
+
+    return (
+        <div className="card-scene">
+            <div
+                className="flex flex-row w-full space-x-2"
+            >
+                {scene?.children?.map((column: any) => (
+                    <div key={column.id} className="w-full">
+                        <div className={column.props.className}>
+                            <div className="card-column-header">
+                                <Typography variant="h6">{column.name}</Typography>
+                            </div>
+                            <Container
+                                {...column.props}
+                                groupName="col"
+                                onDrop={e => handleCardDrop(column.id, e)}
+                                getChildPayload={index => getCardPayload(column.id, index)}
+                                dragClass="card-ghost"
+                                dropClass="card-ghost-drop"
+                                dropPlaceholder={{
+                                    animationDuration: 150,
+                                    showOnTop: true,
+                                    className: 'drop-preview',
+                                }}
+                                style={{ minHeight: 800, overflow: "scroll", height: "100vh", marginBottom: 100 }}
+                                dropPlaceholderAnimationDuration={200}
+                            >
+                                {column?.children?.map((card: any) => (
+                                    <Draggable key={card.id}>
+                                        <Card className="mt-2">
+                                            <CardBody className="flex flex-row">
+                                                <div className="flex flex-col space-y-2 w-1/4">
+                                                    <Typography variant="h6" color="blue-gray" className="mb-2">
+                                                        Floor {card.floor} / Table {card.table}
+                                                    </Typography>
+                                                    {!isEmpty(card.items) && (
+                                                        card.items as OrderItem[])?.map(({ name, quantity }) =>
+                                                            <Typography>
+                                                                {name} X {quantity}
+                                                            </Typography>
+                                                        )}
+                                                </div>
+                                            </CardBody>
+                                        </Card>
+                                    </Draggable>
+                                ))}
+                            </Container>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default Cards;
