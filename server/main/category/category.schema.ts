@@ -1,6 +1,6 @@
 import { getModelForClass, mongoose, prop } from "@typegoose/typegoose";
 import { MenuItem } from "main/menu-item/menu-item.schema";
-import { ObjectType, Field, InputType, ID } from "type-graphql";
+import { ObjectType, Field, InputType } from "type-graphql";
 
 @ObjectType()
 export class Category {

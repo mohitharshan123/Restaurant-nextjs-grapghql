@@ -11,6 +11,7 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { IsEmail, MaxLength, MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
+import { Role } from "main/roles/roles.schema";
 
 function findByEmail(
   this: ReturnModelType<typeof User, QueryHelpers>,
@@ -48,6 +49,10 @@ export class User {
 
   @prop({ required: true })
   password: string;
+
+  @Field(() => Role)
+  @prop({ required: true })
+  role: Role
 }
 
 export const UserModel = mongoose.models.User || getModelForClass<typeof User, QueryHelpers>(User);

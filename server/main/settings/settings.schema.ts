@@ -3,6 +3,7 @@ import {
     mongoose,
     prop,
 } from "@typegoose/typegoose";
+import { Role } from "main/roles/roles.schema";
 import { Field, InputType, ObjectType } from "type-graphql";
 
 @ObjectType()
@@ -14,6 +15,11 @@ export class Settings {
     @Field()
     @prop({ required: false })
     paymentApiSecret?: string;
+
+    @Field(() => [Role])
+    @prop({ required: false })
+    roles: Role[]
+
 }
 
 export const SettingsModel = mongoose.models.Settings || getModelForClass<typeof Settings>(Settings);
@@ -26,4 +32,7 @@ export class UpdateSettingsInput {
 
     @Field(() => String)
     paymentApiSecret?: string | undefined;
+
+    // @Field(() => [Role])
+    // roles?: Role[]
 }

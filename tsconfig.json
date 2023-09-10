@@ -117,7 +117,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/restaurant/[id]/layout.jsx"
+    "app/restaurant/[id]/layout.jsx",
+    "server/seeders/restaurant.seeder.js"
   ],
   "exclude": ["node_modules"]
 }
