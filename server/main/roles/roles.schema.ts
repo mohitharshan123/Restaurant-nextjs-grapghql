@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import { getModelForClass, mongoose, prop } from "@typegoose/typegoose";
 import { ObjectType, Field, InputType, ID } from "type-graphql";
 

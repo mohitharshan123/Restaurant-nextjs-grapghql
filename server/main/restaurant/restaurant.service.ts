@@ -42,7 +42,7 @@ class RestaurantService {
         throw new ApolloError("Restaurant not found");
       }
       return restaurant;
-    } catch (error) {
+    } catch (error: any) {
       throw new ApolloError(error);
     }
   }
@@ -56,7 +56,7 @@ class RestaurantService {
         throw new ApolloError("Restaurant not found");
       }
       return restaurant;
-    } catch (error) {
+    } catch (error: any) {
       throw new ApolloError(error);
     }
   }
@@ -73,7 +73,7 @@ class RestaurantService {
         throw new ApolloError('Restaurant not found');
       }
       return restaurant;
-    } catch (error) {
+    } catch (error: any) {
       throw new ApolloError(error);
     }
   }

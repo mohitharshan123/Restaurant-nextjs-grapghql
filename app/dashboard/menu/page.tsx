@@ -36,7 +36,7 @@ const Menu: React.FC = () => {
 
   const [open, setOpen] = useState(0);
 
-  const handleOpen = (value) => setOpen(open === value ? null : value);
+  const handleOpen = (value: any) => setOpen(open === value ? null : value);
 
   if (!menu || isLoading) return null;
 

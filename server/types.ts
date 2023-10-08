@@ -8,12 +8,12 @@ export interface Context {
         name: string;
         value: string;
         options: {
-            maxAge: number;
-            httpOnly: boolean;
-            domain: string;
-            path: string;
-            sameSite: string;
-            secure: boolean;
+            maxAge?: number;
+            httpOnly?: boolean;
+            domain?: string;
+            path?: string;
+            sameSite?: string;
+            secure?: boolean;
         };
     }>;
 }

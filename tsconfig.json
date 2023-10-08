@@ -118,7 +118,7 @@
     "**/*.ts",
     "**/*.tsx",
     "app/restaurant/[id]/layout.jsx",
-    "server/seeders/restaurant.seeder.js"
+    "server/seeders/restaurant.seeder.ts"
   ],
   "exclude": ["node_modules"]
 }

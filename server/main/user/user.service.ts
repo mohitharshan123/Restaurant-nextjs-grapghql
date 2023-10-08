@@ -6,8 +6,8 @@ import { CreateUserInput, LoginInput, UserModel } from "main/user/user.schema";
 
 import { signJwt } from "../../utils/jwt";
 import { RestaurantModel } from "main/restaurant/restaurant.schema";
-import { Context } from "@/types/";
 import { MenuModel } from "main/menu/menu.schema";
+import { Context } from "../../types";
 
 class UserService {
   async createUser(input: CreateUserInput) {
@@ -49,7 +49,7 @@ class UserService {
     const e = "Invalid email or password";
 
     // Get our user by email
-    const user = await UserModel.find().findByEmail(input.email).lean();
+    const user = await UserModel.findOne({ email: input.email }).lean();
 
     if (!user) {
       throw new ApolloError(e);
@@ -69,7 +69,7 @@ class UserService {
       name: "accessToken",
       value: token,
       options: {
-        maxAge: 3.154e10, 
+        maxAge: 3.154e10,
         domain: process.env.DOMAIN,
         path: "/",
         sameSite: "strict",
@@ -85,7 +85,7 @@ class UserService {
       const decodedToken: any = jwt.verify(token, process.env.PRIVATE_KEY ?? "");
       const user = UserModel.findOne({ id: decodedToken.id });
       return user;
-    } catch (error) {
+    } catch (error: any) {
       throw new ApolloError(error);
     }
   }
